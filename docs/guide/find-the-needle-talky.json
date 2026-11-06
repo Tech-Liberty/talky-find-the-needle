@@ -508,16 +508,6 @@
             "fr": "La valeur `token` de `bridge\\config.json`, celle que le pont a mise dans le presse-papiers",
             "en": "The `token` value of `bridge\\config.json`, the one the bridge put in the clipboard"
           }
-        ],
-        [
-          {
-            "fr": "Commande de chat (sans « ! »)",
-            "en": "Chat command (without \"!\")"
-          },
-          {
-            "fr": "`foin` par défaut : vos viewers tapent `!foin`",
-            "en": "`foin` by default, `hay` for example: your viewers then type `!hay`"
-          }
         ]
       ]
     },
@@ -746,8 +736,8 @@
             "en": "`/hooks/command`"
           },
           {
-            "fr": "Un peu de foin, une fois toutes les 30 secondes",
-            "en": "A little hay, once every 30 seconds"
+            "fr": "Un effet par commande, au même délai que sa récompense : `!foin`, `!canard`, `!prout`, `!aiguille`, `!ejecte`, `!aimant`, `!levitation`, `!bourre`, `!envers`, `!zoom`, `!toupie`, `!panne`, `!vent`",
+            "en": "One effect per command, with the same cooldown as its reward: `!hay`, `!duck`, `!fart`, `!needle`, `!launch`, `!magnet`, `!levitate`, `!drunk`, `!upsidedown`, `!zoom`, `!spin`, `!blackout`, `!wind`"
           }
         ]
       ]
@@ -761,8 +751,8 @@
         "en": "Name on chat commands"
       },
       "text": {
-        "fr": "Le widget n'envoie que le nom de la commande : ni le pseudo du viewer, ni le texte tapé après elle. La plateforme interdit de redistribuer les messages du chat depuis un widget de la marketplace.",
-        "en": "The widget only sends the name of the command: neither the viewer's name nor the text typed after it. The platform forbids redistributing chat messages from a marketplace widget."
+        "fr": "Le widget n'envoie que le nom de la commande : ni le pseudo du viewer, ni le texte tapé après elle. La plateforme interdit de redistribuer les messages du chat depuis un widget de la marketplace. En jeu, une commande s'affiche donc au nom de `anonymousName` (`settings` de `bridge\\config.json`). La case « Donner la liste des commandes à l'activation » envoie la liste dans le chat Twitch quand vous activez le widget.",
+        "en": "The widget only sends the name of the command: neither the viewer's name nor the text typed after it. The platform forbids redistributing chat messages from a marketplace widget. In the game, a command therefore shows under `anonymousName` (`settings` of `bridge\\config.json`). The \"Post the command list on activation\" box sends the list in Twitch chat when you activate the widget."
       }
     },
     {

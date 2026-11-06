@@ -43,6 +43,8 @@ To uninstall: `tools\install.ps1 -Uninstall`. A game update can replace `overrid
 
 ## Connect LibertyTalk
 
+Viewers get 13 chat commands, with no reward to create: `!hay`, `!duck`, `!fart`, `!needle`, `!launch`, `!magnet`, `!levitate`, `!drunk`, `!upsidedown`, `!zoom`, `!spin`, `!blackout`, `!wind` (or their French equivalent). The `command` webhook picks the workflow from the name of the command, and each effect keeps its `cooldownSeconds`, shared with the reward for the same effect.
+
 The bridge follows Talky's contract: `POST /hooks/<id>` with the `X-Bridge-Token` header, and the same ids (`follow`, `sub`, `gift`, `bits`, `raid`, `points`, `command`, `donation`, `superchat`, `member`).
 
 1. Expose the bridge: `cloudflared tunnel --url http://127.0.0.1:7421`.

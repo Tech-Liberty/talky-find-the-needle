@@ -368,3 +368,21 @@ test('the token never appears in the logs', async (t) => {
 test('a body with an unescaped quote is recovered', () => {
   assert.deepStrictEqual(parseBody('{"user_name":"Bo"b","bits":"5"}'), { user_name: 'Bo"b', bits: '5' });
 });
+
+test('each chat command runs its effect, an unknown one runs nothing', async (t) => {
+  const { post } = await setup(t);
+  const run = async (command) => (await (await post('/hooks/command', { command })).json()).results ?? [];
+  assert.strictEqual((await run('canard'))[0].workflow, 'points_duck');
+  assert.strictEqual((await run('wind'))[0].workflow, 'points_gust');
+  assert.strictEqual((await run('lévitation'))[0].workflow, 'points_levitate');
+  assert.strictEqual((await run('levitate2')).length, 0);
+  assert.strictEqual((await run('bonjour')).length, 0);
+});
+
+test('a chat command shares the cooldown of the matching reward', async (t) => {
+  const { post } = await setup(t);
+  const first = await (await post('/hooks/command', { command: 'canard' })).json();
+  const second = await (await post('/hooks/points', { user_name: 'A', reward_title: 'Un canard' })).json();
+  assert.notStrictEqual(first.results[0].reason, 'cooldown');
+  assert.strictEqual(second.results[0].reason, 'cooldown');
+});

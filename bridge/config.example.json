@@ -56,7 +56,112 @@
       "workflow": "new_sub"
     },
     "command": {
-      "workflow": "chat_hay"
+      "routes": [
+        {
+          "when": {
+            "command": {
+              "matches": "^(?:foin|hay)$"
+            }
+          },
+          "workflow": "chat_hay"
+        },
+        {
+          "when": {
+            "command": {
+              "matches": "^(?:canard|duck)$"
+            }
+          },
+          "workflow": "points_duck"
+        },
+        {
+          "when": {
+            "command": {
+              "matches": "^(?:prout|fart)$"
+            }
+          },
+          "workflow": "points_fart"
+        },
+        {
+          "when": {
+            "command": {
+              "matches": "^(?:aiguille|needle)$"
+            }
+          },
+          "workflow": "points_fake_needle"
+        },
+        {
+          "when": {
+            "command": {
+              "matches": "^(?:[eé]jecte|launch)$"
+            }
+          },
+          "workflow": "points_yeet"
+        },
+        {
+          "when": {
+            "command": {
+              "matches": "^(?:aimant|magnet)$"
+            }
+          },
+          "workflow": "points_magnet"
+        },
+        {
+          "when": {
+            "command": {
+              "matches": "^(?:l[eé]vitation|levitate)$"
+            }
+          },
+          "workflow": "points_levitate"
+        },
+        {
+          "when": {
+            "command": {
+              "matches": "^(?:bourr[eé]|drunk)$"
+            }
+          },
+          "workflow": "points_drunk"
+        },
+        {
+          "when": {
+            "command": {
+              "matches": "^(?:envers|upsidedown)$"
+            }
+          },
+          "workflow": "points_upside_down"
+        },
+        {
+          "when": {
+            "command": {
+              "matches": "^(?:zoom)$"
+            }
+          },
+          "workflow": "points_quake_pro"
+        },
+        {
+          "when": {
+            "command": {
+              "matches": "^(?:toupie|spin)$"
+            }
+          },
+          "workflow": "points_spin"
+        },
+        {
+          "when": {
+            "command": {
+              "matches": "^(?:panne|blackout)$"
+            }
+          },
+          "workflow": "points_blackout"
+        },
+        {
+          "when": {
+            "command": {
+              "matches": "^(?:vent|wind)$"
+            }
+          },
+          "workflow": "points_gust"
+        }
+      ]
     },
     "message": {
       "workflow": "message"

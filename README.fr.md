@@ -41,6 +41,8 @@ Pour désinstaller : `tools\install.ps1 -Uninstall`. Une mise à jour du jeu peu
 
 ## Brancher LibertyTalk
 
+Les viewers ont 13 commandes de chat, sans récompense à créer : `!foin`, `!canard`, `!prout`, `!aiguille`, `!ejecte`, `!aimant`, `!levitation`, `!bourre`, `!envers`, `!zoom`, `!toupie`, `!panne`, `!vent` (ou leur équivalent anglais). Le webhook `command` choisit le workflow d'après le nom de la commande, et chaque effet garde son `cooldownSeconds`, partagé avec la récompense du même effet.
+
 Le bridge reprend le contrat de Talky : `POST /hooks/<id>` avec l'en-tête `X-Bridge-Token`, et les mêmes identifiants (`follow`, `sub`, `gift`, `bits`, `raid`, `points`, `command`, `donation`, `superchat`, `member`).
 
 1. Exposez le bridge : `cloudflared tunnel --url http://127.0.0.1:7421`.
