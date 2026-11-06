@@ -189,7 +189,7 @@
             "fr": "Télécharger Talky Needle",
             "en": "Download Talky Needle"
           },
-          "url": "",
+          "url": "https://github.com/Tech-Liberty/talky-find-the-needle/releases/latest",
           "kind": "github",
           "description": {
             "fr": "Le fichier `TalkyNeedle-0.1.0.zip`, avec le mod, le pont et les scripts.",
