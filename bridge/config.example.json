@@ -1,0 +1,735 @@
+{
+  "port": 7421,
+  "gamePort": 7422,
+  "token": "change-me-to-a-long-random-string",
+  "jobTtlSeconds": 900,
+  "httpAllowedHosts": [
+    "*.liberty-talk.com"
+  ],
+  "httpTargets": {
+    "lt_report": {
+      "url": "https://api.liberty-talk.com/webhooks/workflow/PASTE_THE_TOKEN_OF_YOUR_INCOMING_WEBHOOK",
+      "headers": {
+        "X-Webhook-Secret": "PASTE_THE_SECRET_OF_YOUR_INCOMING_WEBHOOK"
+      }
+    }
+  },
+  "settings": {
+    "anonymousName": "Anonyme",
+    "maxJobsPerMinute": 30,
+    "bitsMultiplier": 10,
+    "blockedActions": [],
+    "safeMode": false,
+    "safeModeBlocks": [
+      "yeet",
+      "spin",
+      "drunk",
+      "upside_down",
+      "quake_pro",
+      "blackout"
+    ]
+  },
+  "webhooks": {
+    "follow": {
+      "workflow": "new_follower"
+    },
+    "sub": {
+      "workflow": "new_sub"
+    },
+    "gift": {
+      "workflow": "gift_subs"
+    },
+    "bits": {
+      "workflow": "bits"
+    },
+    "raid": {
+      "workflow": "raid"
+    },
+    "donation": {
+      "workflow": "donation"
+    },
+    "superchat": {
+      "workflow": "donation"
+    },
+    "member": {
+      "workflow": "new_sub"
+    },
+    "command": {
+      "workflow": "chat_hay"
+    },
+    "message": {
+      "workflow": "message"
+    },
+    "points": {
+      "routes": [
+        {
+          "when": {
+            "reward_title": {
+              "contains": "foin"
+            }
+          },
+          "workflow": "points_hay"
+        },
+        {
+          "when": {
+            "reward_title": {
+              "contains": "canard"
+            }
+          },
+          "workflow": "points_duck"
+        },
+        {
+          "when": {
+            "reward_title": {
+              "contains": "prout"
+            }
+          },
+          "workflow": "points_fart"
+        },
+        {
+          "when": {
+            "reward_title": {
+              "contains": "aiguille"
+            }
+          },
+          "workflow": "points_fake_needle"
+        },
+        {
+          "when": {
+            "reward_title": {
+              "contains": "éjecte"
+            }
+          },
+          "workflow": "points_yeet"
+        },
+        {
+          "when": {
+            "reward_title": {
+              "contains": "aimant"
+            }
+          },
+          "workflow": "points_magnet"
+        },
+        {
+          "when": {
+            "reward_title": {
+              "contains": "lévitation"
+            }
+          },
+          "workflow": "points_levitate"
+        },
+        {
+          "when": {
+            "reward_title": {
+              "contains": "bourré"
+            }
+          },
+          "workflow": "points_drunk"
+        },
+        {
+          "when": {
+            "reward_title": {
+              "contains": "envers"
+            }
+          },
+          "workflow": "points_upside_down"
+        },
+        {
+          "when": {
+            "reward_title": {
+              "contains": "zoom"
+            }
+          },
+          "workflow": "points_quake_pro"
+        },
+        {
+          "when": {
+            "reward_title": {
+              "contains": "toupie"
+            }
+          },
+          "workflow": "points_spin"
+        },
+        {
+          "when": {
+            "reward_title": {
+              "contains": "panne"
+            }
+          },
+          "workflow": "points_blackout"
+        },
+        {
+          "when": {
+            "reward_title": {
+              "contains": "vent"
+            }
+          },
+          "workflow": "points_gust"
+        }
+      ]
+    }
+  },
+  "gameEvents": {
+    "needle_found": [
+      "on_needle_found",
+      "report_to_libertytalk"
+    ],
+    "pile_replaced": "on_new_pile"
+  },
+  "workflows": {
+    "new_follower": {
+      "menu": {
+        "label": "Follow",
+        "group": "Événements"
+      },
+      "steps": [
+        {
+          "action": "notify",
+          "text": "{{user}} débarque sur le tas !"
+        },
+        {
+          "action": "duck",
+          "name": "{{user}}",
+          "size": 0.8
+        }
+      ]
+    },
+    "new_sub": {
+      "menu": {
+        "label": "Abonnement",
+        "group": "Événements"
+      },
+      "steps": [
+        {
+          "set": {
+            "tierLevel": "{{tier | default:1000 | tier}}"
+          }
+        },
+        {
+          "action": "notify",
+          "text": "{{user}} s'abonne : canard géant !",
+          "color": "#ffd54f"
+        },
+        {
+          "action": "duck",
+          "name": "{{user}}",
+          "size": "{{tierLevel | add:1 | mul:1.5}}",
+          "seconds": 900
+        }
+      ]
+    },
+    "gift_subs": {
+      "menu": {
+        "label": "10 abos offerts",
+        "group": "Événements",
+        "payload": {
+          "total": 10
+        }
+      },
+      "steps": [
+        {
+          "action": "notify",
+          "text": "{{user}} offre {{total | default:1}} abos : PLUIE DE CANARDS !",
+          "color": "#ff8a65"
+        },
+        {
+          "action": "duck",
+          "name": "{{user}}",
+          "count": "{{total | default:1 | clamp:1:30}}",
+          "size": 1.2
+        }
+      ]
+    },
+    "bits": {
+      "menu": {
+        "label": "500 bits",
+        "group": "Événements",
+        "payload": {
+          "bits": 500
+        }
+      },
+      "steps": [
+        {
+          "if": {
+            "bits": {
+              "gte": 1000
+            }
+          },
+          "then": [
+            {
+              "action": "notify",
+              "text": "{{bits}} bits de {{user}} : AVALANCHE !",
+              "color": "#ff1744"
+            },
+            {
+              "action": "hay_rain",
+              "count": "{{bitsMultiplied | clamp:10:5000}}"
+            },
+            {
+              "action": "duck",
+              "name": "{{user}}",
+              "size": 4
+            }
+          ],
+          "else": [
+            {
+              "action": "notify",
+              "text": "{{user}} ajoute du foin ({{bits}} bits)"
+            },
+            {
+              "action": "hay_rain",
+              "count": "{{bitsMultiplied | clamp:10:5000}}"
+            }
+          ]
+        }
+      ]
+    },
+    "raid": {
+      "menu": {
+        "label": "Raid (50 viewers)",
+        "group": "Événements",
+        "payload": {
+          "viewers": 50
+        }
+      },
+      "steps": [
+        {
+          "action": "notify",
+          "text": "RAID DE FOIN : {{user}} arrive avec {{viewers | default:1}} viewers !",
+          "color": "#b388ff"
+        },
+        {
+          "action": "hay_rain",
+          "count": "{{viewers | default:1 | mul:5 | clamp:30:300}}"
+        },
+        {
+          "action": "duck",
+          "name": "{{user}}",
+          "count": "{{viewers | default:1 | div:5 | ceil | clamp:1:30}}"
+        },
+        {
+          "action": "yeet",
+          "force": 12
+        }
+      ]
+    },
+    "donation": {
+      "menu": {
+        "label": "Don",
+        "group": "Événements"
+      },
+      "steps": [
+        {
+          "action": "notify",
+          "text": "Merci {{user}} !",
+          "color": "#69f0ae"
+        },
+        {
+          "action": "duck",
+          "name": "{{user}}",
+          "size": 5,
+          "seconds": 900
+        }
+      ]
+    },
+    "chat_hay": {
+      "cooldownSeconds": 30,
+      "steps": [
+        {
+          "action": "hay_rain",
+          "count": 10
+        }
+      ]
+    },
+    "points_hay": {
+      "menu": {
+        "label": "Livraison de foin",
+        "group": "Foin"
+      },
+      "cooldownSeconds": 30,
+      "steps": [
+        {
+          "action": "notify",
+          "text": "{{user}} commande une livraison de foin"
+        },
+        {
+          "action": "hay_rain",
+          "count": 100
+        }
+      ]
+    },
+    "points_duck": {
+      "menu": {
+        "label": "Canard",
+        "group": "Canards"
+      },
+      "cooldownSeconds": 20,
+      "steps": [
+        {
+          "action": "duck",
+          "name": "{{user}}",
+          "size": "{{'' | pick:0.6:1:1:2:3}}"
+        }
+      ]
+    },
+    "points_fart": {
+      "menu": {
+        "label": "Prout",
+        "group": "Troll"
+      },
+      "cooldownSeconds": 30,
+      "steps": [
+        {
+          "action": "notify",
+          "text": "{{user}} a lâché une caisse dans la grange"
+        },
+        {
+          "action": "hay_rain",
+          "count": 40,
+          "on": "player",
+          "radius": 6,
+          "height": 2
+        },
+        {
+          "action": "sound",
+          "name": "fart"
+        },
+        {
+          "action": "gust",
+          "strength": 6,
+          "radius": 10
+        }
+      ]
+    },
+    "points_fake_needle": {
+      "menu": {
+        "label": "Fausse aiguille",
+        "group": "Troll"
+      },
+      "cooldownSeconds": 180,
+      "steps": [
+        {
+          "action": "sound",
+          "name": "beep"
+        },
+        {
+          "action": "wait",
+          "seconds": 0.9
+        },
+        {
+          "action": "sound",
+          "name": "beep"
+        },
+        {
+          "action": "wait",
+          "seconds": 0.7
+        },
+        {
+          "action": "sound",
+          "name": "beep"
+        },
+        {
+          "action": "wait",
+          "seconds": 0.5
+        },
+        {
+          "action": "sound",
+          "name": "beep"
+        },
+        {
+          "action": "wait",
+          "seconds": 0.3
+        },
+        {
+          "repeat": 8,
+          "steps": [
+            {
+              "action": "sound",
+              "name": "beep",
+              "pitch": 1.2
+            },
+            {
+              "action": "wait",
+              "seconds": 0.12
+            }
+          ]
+        },
+        {
+          "action": "notify",
+          "text": "AIGUILLE TROUVÉE !",
+          "color": "#ffd54f",
+          "seconds": 3
+        },
+        {
+          "action": "wait",
+          "seconds": 3
+        },
+        {
+          "action": "sound",
+          "name": "quack"
+        },
+        {
+          "action": "notify",
+          "text": "... non. Merci {{user}}.",
+          "seconds": 4
+        }
+      ]
+    },
+    "points_yeet": {
+      "menu": {
+        "label": "Éjection",
+        "group": "Joueur"
+      },
+      "cooldownSeconds": 60,
+      "steps": [
+        {
+          "action": "notify",
+          "text": "{{user}} t'envoie en l'air !",
+          "color": "#ff8a65"
+        },
+        {
+          "action": "yeet",
+          "force": 16
+        }
+      ]
+    },
+    "points_magnet": {
+      "menu": {
+        "label": "Aimant à foin",
+        "group": "Foin"
+      },
+      "cooldownSeconds": 120,
+      "steps": [
+        {
+          "action": "notify",
+          "text": "{{user}} : tout le foin t'adore",
+          "color": "#ff80ab"
+        },
+        {
+          "action": "hay_rain",
+          "count": 120,
+          "on": "player",
+          "radius": 10
+        },
+        {
+          "action": "magnet",
+          "seconds": 8
+        }
+      ]
+    },
+    "points_levitate": {
+      "menu": {
+        "label": "Lévitation",
+        "group": "Foin"
+      },
+      "cooldownSeconds": 120,
+      "steps": [
+        {
+          "action": "notify",
+          "text": "{{user}} coupe la gravité du foin",
+          "color": "#b388ff"
+        },
+        {
+          "action": "hay_rain",
+          "count": 120,
+          "on": "player",
+          "radius": 10,
+          "height": 2
+        },
+        {
+          "action": "levitate",
+          "seconds": 8
+        }
+      ]
+    },
+    "points_drunk": {
+      "menu": {
+        "label": "Bourré",
+        "group": "Écran"
+      },
+      "cooldownSeconds": 180,
+      "steps": [
+        {
+          "action": "notify",
+          "text": "{{user}} paye sa tournée",
+          "color": "#ffab40"
+        },
+        {
+          "action": "drunk",
+          "seconds": 20
+        }
+      ]
+    },
+    "points_upside_down": {
+      "menu": {
+        "label": "À l'envers",
+        "group": "Écran"
+      },
+      "cooldownSeconds": 180,
+      "steps": [
+        {
+          "action": "notify",
+          "text": "{{user}} retourne l'écran",
+          "color": "#ffab40"
+        },
+        {
+          "action": "upside_down",
+          "seconds": 12
+        }
+      ]
+    },
+    "points_quake_pro": {
+      "menu": {
+        "label": "Zoom extrême",
+        "group": "Écran"
+      },
+      "cooldownSeconds": 120,
+      "steps": [
+        {
+          "action": "quake_pro",
+          "seconds": 12
+        }
+      ]
+    },
+    "points_spin": {
+      "menu": {
+        "label": "Toupie",
+        "group": "Joueur"
+      },
+      "cooldownSeconds": 90,
+      "steps": [
+        {
+          "action": "notify",
+          "text": "{{user}} te fait tourner"
+        },
+        {
+          "action": "spin",
+          "turns": 5,
+          "seconds": 2.5
+        }
+      ]
+    },
+    "points_blackout": {
+      "menu": {
+        "label": "Panne de courant",
+        "group": "Écran"
+      },
+      "cooldownSeconds": 180,
+      "steps": [
+        {
+          "action": "blackout",
+          "seconds": 4,
+          "text": "{{user}} n'a pas payé l'électricité"
+        }
+      ]
+    },
+    "points_gust": {
+      "menu": {
+        "label": "Coup de vent",
+        "group": "Foin"
+      },
+      "cooldownSeconds": 60,
+      "steps": [
+        {
+          "action": "notify",
+          "text": "{{user}} souffle sur le foin !"
+        },
+        {
+          "action": "hay_rain",
+          "count": 60,
+          "on": "player",
+          "radius": 8,
+          "height": 2
+        },
+        {
+          "action": "gust",
+          "strength": 10,
+          "radius": 15
+        }
+      ]
+    },
+    "message": {
+      "userCooldownSeconds": 10,
+      "steps": [
+        {
+          "action": "message",
+          "author": "{{user}}",
+          "text": "{{text | default:message}}"
+        }
+      ]
+    },
+    "clear_ducks": {
+      "menu": {
+        "label": "Supprimer les canards",
+        "group": "Canards"
+      },
+      "steps": [
+        {
+          "action": "clear_ducks"
+        }
+      ]
+    },
+    "on_needle_found": {
+      "steps": [
+        {
+          "action": "notify",
+          "text": "AIGUILLE TROUVÉE !",
+          "color": "#ffd54f",
+          "seconds": 6
+        }
+      ]
+    },
+    "on_new_pile": {
+      "steps": [
+        {
+          "action": "log",
+          "message": "new hay pile"
+        }
+      ]
+    },
+    "report_to_libertytalk": {
+      "enabled": false,
+      "steps": [
+        {
+          "action": "http",
+          "target": "lt_report",
+          "body": {
+            "event": "{{event}}",
+            "needlesFound": "{{needlesFound}}"
+          }
+        }
+      ]
+    },
+    "dev_menu": {
+      "steps": [
+        {
+          "action": "menu",
+          "open": true,
+          "tab": "{{tab | default:effects}}"
+        }
+      ]
+    },
+    "dev_close": {
+      "steps": [
+        {
+          "action": "menu",
+          "open": false
+        }
+      ]
+    },
+    "dev_reload": {
+      "steps": [
+        {
+          "action": "reload_menu"
+        }
+      ]
+    },
+    "dev_shot": {
+      "steps": [
+        {
+          "action": "screenshot"
+        }
+      ]
+    }
+  }
+}

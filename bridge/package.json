@@ -1,0 +1,16 @@
+{
+  "name": "talky-needle-bridge",
+  "version": "0.1.0",
+  "description": "Unofficial. Receives LibertyTalk webhooks and turns them into jobs for the Talky Needle mod of Find The Needle.",
+  "private": true,
+  "license": "MIT",
+  "main": "bridge.js",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node bridge.js",
+    "fire": "node bridge.js fire",
+    "test": "node --test test/"
+  }
+}
