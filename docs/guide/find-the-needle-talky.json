@@ -109,8 +109,8 @@
         "en": "Tested version"
       },
       "text": {
-        "fr": "Talky Needle 0.1.0 a été lancé sur Find The Needle EA V11, en solo et sur Windows 11. Une mise à jour du jeu peut déplacer ce que le mod utilise : le pont écrit alors `warning: hooks missing` au chargement d'une partie.",
-        "en": "Talky Needle 0.1.0 was run on Find The Needle EA V11, in single player, on Windows 11. A game update can move what the mod relies on: the bridge then prints `warning: hooks missing` when a game loads."
+        "fr": "Talky Needle 0.1.0 a été lancé sur Find The Needle EA V12, en solo et sur Windows 11. Une mise à jour du jeu peut déplacer ce que le mod utilise : le pont écrit alors `warning: hooks missing` au chargement d'une partie.",
+        "en": "Talky Needle 0.1.0 was run on Find The Needle EA V12, in single player, on Windows 11. A game update can move what the mod relies on: the bridge then prints `warning: hooks missing` when a game loads."
       }
     },
     {

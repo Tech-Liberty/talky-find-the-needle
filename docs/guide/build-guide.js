@@ -43,8 +43,8 @@ const blocks = [
     "Talky Needle est un mod non officiel, sans lien avec le développeur de Find The Needle, et vous l'utilisez à vos risques. Il demande le jeu complet. Le jeu détecte les mods au lancement et sort la partie des classements en ligne. Cette exclusion peut durer après la désinstallation. Le mod ne lit ni ne modifie le fichier `.pck` du jeu.",
     'Talky Needle is an unofficial mod, not affiliated with the developer of Find The Needle, and you use it at your own risk. It requires the full game. The game detects mods at startup and takes the run off the online leaderboards. This exclusion may last after you uninstall. The mod neither reads nor changes the game\'s `.pck` file.'),
   callout('intro-tested', 'info', 'Version testée', 'Tested version',
-    "Talky Needle 0.1.0 a été lancé sur Find The Needle EA V11, en solo et sur Windows 11. Une mise à jour du jeu peut déplacer ce que le mod utilise : le pont écrit alors `warning: hooks missing` au chargement d'une partie.",
-    'Talky Needle 0.1.0 was run on Find The Needle EA V11, in single player, on Windows 11. A game update can move what the mod relies on: the bridge then prints `warning: hooks missing` when a game loads.'),
+    "Talky Needle 0.1.0 a été lancé sur Find The Needle EA V12, en solo et sur Windows 11. Une mise à jour du jeu peut déplacer ce que le mod utilise : le pont écrit alors `warning: hooks missing` au chargement d'une partie.",
+    'Talky Needle 0.1.0 was run on Find The Needle EA V12, in single player, on Windows 11. A game update can move what the mod relies on: the bridge then prints `warning: hooks missing` when a game loads.'),
 
   part('part-1-enable', 'Activer Talky Needle dans le jeu', 'Turn on Talky Needle in the game',
     'Installer le mod et le pont, tester depuis le menu F8, ouvrir le tunnel, puis relier LibertyTalk.',

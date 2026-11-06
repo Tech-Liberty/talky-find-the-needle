@@ -12,6 +12,8 @@ const MAX_NOTIFY_SECONDS := 60.0
 const MAX_MESSAGE_QUEUE := 20
 const MAX_HAY_PER_STEP := 100000
 const MAX_HAY_VISIBLE := 300  # loose straws cost physics time: the rest goes straight into the pile
+const PATCH_RADIUS := 8  # grid points around the center of a raised patch of the pile
+const PATCH_MAX_RISE := 1.5  # metres at its center
 const HAY_PER_FRAME := 15
 const MAX_RADIUS := 40.0
 const MAX_GUST := 40.0
@@ -405,8 +407,9 @@ func _hay_rain(p: Dictionary, _job: Dictionary) -> String:
 	return "" if spawned > 0 else "refused"
 
 
-# Adds strands to the pile: raises the height grid, more at the top than at the edges,
-# and adds them to the game's counter. Returns false when this build offers no way to do it.
+# Adds strands to the pile and to the game's counter by raising one rounded patch of the height
+# grid. A small patch on purpose: the game rebuilds its collision by zones, and raising the whole
+# pile froze it about five times for half a second. Returns false when this build has no way to do it.
 func _grow_pile(strands: int) -> bool:
 	var field: Variant = mod.world_get("field")
 	var gs: Node = mod.game_state()
@@ -425,26 +428,59 @@ func _grow_pile(strands: int) -> bool:
 	var total := float(gs.get("hay_total"))
 	if sum <= 0.0 or top < PILE_MIN_HEIGHT or total <= 0.0:
 		return false
+	# Somewhere on the upper part of the pile, a different place each time.
+	var candidates := PackedInt32Array()
+	for i in grid.size():
+		if grid[i] >= top * 0.6:
+			candidates.append(i)
+	var center: int = candidates[randi() % candidates.size()]
+	var cx := center % nv
+	var cz := center / nv
 	# The pile tells how many strands one metre of height is worth.
 	var wanted := float(strands) * sum / total
-	var weights := 0.0
-	for h: float in grid:
-		if h >= PILE_MIN_HEIGHT:
-			weights += h / top
-	var rise := wanted / weights
-	var touched := PackedInt32Array()
-	for i in grid.size():
-		if grid[i] >= PILE_MIN_HEIGHT:
-			grid[i] += rise * grid[i] / top
-			touched.append(i)
-	field.set("heights", grid)
-	for i in touched:
-		field.call("_dirty_vertex_cells", i % nv, i / nv)
+	var radius := PATCH_RADIUS
+	while true:
+		var weights := _patch_weights(nv, cx, cz, radius)
+		var peak := wanted / weights
+		if peak <= PATCH_MAX_RISE or radius >= nv:
+			_raise_patch(field, grid, nv, cx, cz, radius, peak)
+			break
+		radius *= 2  # a very large gift: wider rather than a spike
 	gs.set("hay_total", total + float(strands))
 	gs.set("_hay_dirty", true)
 	if gs.has_signal("hay_changed"):
 		gs.emit_signal("hay_changed", gs.get("hay_total"), gs.get("hay_dug"))
 	return true
+
+
+func _patch_weights(nv: int, cx: int, cz: int, radius: int) -> float:
+	var weights := 0.0
+	for z in range(maxi(cz - radius, 0), mini(cz + radius + 1, nv)):
+		for x in range(maxi(cx - radius, 0), mini(cx + radius + 1, nv)):
+			weights += _patch_weight(x - cx, z - cz, radius)
+	return weights
+
+
+func _raise_patch(field: Variant, grid: PackedFloat32Array, nv: int, cx: int, cz: int, radius: int, peak: float) -> void:
+	var touched := PackedInt32Array()
+	for z in range(maxi(cz - radius, 0), mini(cz + radius + 1, nv)):
+		for x in range(maxi(cx - radius, 0), mini(cx + radius + 1, nv)):
+			var w := _patch_weight(x - cx, z - cz, radius)
+			if w > 0.0:
+				grid[x + z * nv] += peak * w
+				touched.append(x + z * nv)
+	field.set("heights", grid)
+	for i in touched:
+		field.call("_dirty_vertex_cells", i % nv, i / nv)
+
+
+# 1 at the center, 0 at the edge, without a step.
+func _patch_weight(dx: int, dz: int, radius: int) -> float:
+	var d := sqrt(float(dx * dx + dz * dz)) / float(radius)
+	if d >= 1.0:
+		return 0.0
+	var k := 1.0 - d * d
+	return k * k
 
 
 func _gust(p: Dictionary, _job: Dictionary) -> String:
