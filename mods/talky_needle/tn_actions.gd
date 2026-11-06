@@ -121,8 +121,11 @@ func compat() -> Dictionary:
 
 
 # ---------------------------------------------------------------- menu and checks
-# open: true or false; tab: effects, message, activity or settings.
+# open: true or false; tab: effects, message, activity or settings; language: forces en or fr.
 func _menu(p: Dictionary, _job: Dictionary) -> String:
+	if p.has("language"):
+		mod.i18n.language_override = str(p["language"])
+		mod.reload_menu()
 	if not mod.ensure_menu():
 		return "failed"
 	if p.get("open", true) == false:
@@ -282,6 +285,7 @@ func _show_banner(text: String, color: String, seconds: float) -> void:
 		layer.layer = 100
 		mod.add_child(layer)
 		_banner = Label.new()
+		_banner.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED  # a viewer's text stays as it is
 		_banner.add_theme_font_size_override("font_size", 28)
 		var banner_font: Font = mod.game_font()
 		if banner_font != null:
@@ -352,6 +356,7 @@ func _build_message_panel() -> void:
 	_message_style.set_corner_radius_all(10)
 	_message_style.set_content_margin_all(16.0)
 	_message_panel = PanelContainer.new()
+	_message_panel.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED  # a viewer's text stays as it is
 	_message_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_message_panel.add_theme_stylebox_override("panel", _message_style)
 	var font: Font = mod.game_font()
@@ -610,6 +615,7 @@ func _spawn_duck(world: Node, at: Vector3, size: float, text: String, seconds: f
 	_duck_part(body, 0.05, Vector3(-0.14, 0.6, -0.61), Vector3.ONE, size, black)
 	if text.strip_edges() != "":
 		var label := Label3D.new()
+		label.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
 		label.text = text
 		label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 		label.no_depth_test = true
@@ -653,7 +659,7 @@ func clear_ducks() -> int:
 		body.queue_free()
 	_ducks.clear()
 	if not ducks.is_empty():
-		_notify({"text": "Canards supprimés (%d)" % ducks.size()}, {})
+		_notify({"text": mod.i18n.t("ducks_removed") % ducks.size()}, {})
 	return ducks.size()
 
 
@@ -671,11 +677,12 @@ func _tick_duck_button() -> void:
 		layer.layer = 101
 		mod.add_child(layer)
 		_duck_button = Button.new()
+		_duck_button.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
 		_duck_button.focus_mode = Control.FOCUS_NONE
 		_duck_button.add_theme_font_size_override("font_size", 20)
 		_duck_button.pressed.connect(clear_ducks)
 		layer.add_child(_duck_button)
-	_duck_button.text = "Supprimer les canards (%d)  [F9]" % count
+	_duck_button.text = mod.i18n.t("duck_button") % count
 	_duck_button.visible = true
 
 
@@ -797,6 +804,7 @@ func _start_blackout(p: Dictionary, _job: Dictionary) -> String:
 	_blackout.add_child(black)
 	black.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	var label := Label.new()
+	label.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
 	label.text = str(p.get("text", "")).left(MAX_TEXT)
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER

@@ -34,7 +34,7 @@
       "type": "paragraph",
       "text": {
         "fr": "Talky Needle relie vos événements Twitch et YouTube à votre partie de Find The Needle. Quand Bob suit votre chaîne, un canard en plastique portant le nom « Bob » tombe sur votre tas de foin. Un raid déclenche une avalanche de foin et vous envoie en l'air. Une récompense de points de chaîne peut faire biper votre détecteur jusqu'à « AIGUILLE TROUVÉE ! », avant de révéler que c'était faux.",
-        "en": "Talky Needle connects your Twitch and YouTube events to your Find The Needle game. When Bob follows your channel, a rubber duck named \"Bob\" falls on your hay pile. A raid triggers a hay avalanche and throws you into the air. A channel points reward can make your detector beep up to \"AIGUILLE TROUVÉE !\" (\"needle found\") before revealing it was a fake."
+        "en": "Talky Needle connects your Twitch and YouTube events to your Find The Needle game. When Bob follows your channel, a rubber duck named \"Bob\" falls on your hay pile. A raid triggers a hay avalanche and throws you into the air. A channel points reward can make your detector beep up to \"NEEDLE FOUND!\" before revealing it was a fake."
       }
     },
     {
@@ -109,8 +109,8 @@
         "en": "Tested version"
       },
       "text": {
-        "fr": "Talky Needle 0.1.0 a été lancé sur Find The Needle EA V12, en solo et sur Windows 11. Une mise à jour du jeu peut déplacer ce que le mod utilise : le pont écrit alors `warning: hooks missing` au chargement d'une partie.",
-        "en": "Talky Needle 0.1.0 was run on Find The Needle EA V12, in single player, on Windows 11. A game update can move what the mod relies on: the bridge then prints `warning: hooks missing` when a game loads."
+        "fr": "Talky Needle 0.2.0 a été lancé sur Find The Needle EA V12, en solo et sur Windows 11. Une mise à jour du jeu peut déplacer ce que le mod utilise : le pont écrit alors `warning: hooks missing` au chargement d'une partie.",
+        "en": "Talky Needle 0.2.0 was run on Find The Needle EA V12, in single player, on Windows 11. A game update can move what the mod relies on: the bridge then prints `warning: hooks missing` when a game loads."
       }
     },
     {
@@ -192,8 +192,8 @@
           "url": "https://github.com/Tech-Liberty/talky-find-the-needle/releases/latest",
           "kind": "github",
           "description": {
-            "fr": "Le fichier `TalkyNeedle-0.1.0.zip`, avec le mod, le pont et les scripts.",
-            "en": "The `TalkyNeedle-0.1.0.zip` file, with the mod, the bridge and the scripts."
+            "fr": "Le fichier `TalkyNeedle-0.2.0.zip`, avec le mod, le pont et les scripts.",
+            "en": "The `TalkyNeedle-0.2.0.zip` file, with the mod, the bridge and the scripts."
           }
         },
         {
@@ -303,7 +303,7 @@
       "id": "p1-bridge-code",
       "type": "code",
       "language": "text",
-      "code": "created config.json with a random token, copied to your clipboard; never shown here\nTalky Needle bridge 0.1.0 (unofficial): webhooks on http://127.0.0.1:7421, game link on port 7422\n10 webhook(s), 24 workflow(s), waiting for the game...",
+      "code": "created config.json with a random token, copied to your clipboard; never shown here\nTalky Needle bridge 0.2.0 (unofficial): webhooks on http://127.0.0.1:7421, game link on port 7422\n10 webhook(s), 24 workflow(s), waiting for the game...",
       "caption": {
         "fr": "Ce que le pont affiche au premier lancement, précédé de l'heure.",
         "en": "What the bridge prints on first start, after the time."
@@ -329,7 +329,7 @@
           },
           "text": {
             "fr": "Le foin ajouté par le mod peut rester dans la sauvegarde : gardez votre partie principale de côté pour ce test. Un bandeau « Talky Needle : mod non officiel actif » s'affiche, et le pont écrit `game connected`.",
-            "en": "Hay added by the mod can stay in the save: keep your main game aside for this test. A \"Talky Needle : mod non officiel actif\" banner appears, and the bridge prints `game connected`."
+            "en": "Hay added by the mod can stay in the save: keep your main game aside for this test. A \"Talky Needle: unofficial mod active\" banner appears, and the bridge prints `game connected`."
           }
         },
         {
@@ -339,17 +339,17 @@
           },
           "text": {
             "fr": "La fenêtre Talky Needle s'ouvre, avec `Bridge connecté` en haut à droite. `F8` ou `Échap` la referme.",
-            "en": "The Talky Needle window opens, with `Bridge connecté` at the top right. `F8` or `Esc` closes it."
+            "en": "The Talky Needle window opens, with `Bridge connected` at the top right. `F8` or `Esc` closes it."
           }
         },
         {
           "title": {
             "fr": "Cliquez sur « Canard » dans la page Effets",
-            "en": "Click \"Canard\" on the Effets page"
+            "en": "Click \"Duck\" on the Effects page"
           },
           "text": {
             "fr": "Le champ « Pseudo affiché » contient `Viewer` : fermez la fenêtre, et un canard à ce nom tombe sur le tas.",
-            "en": "The \"Pseudo affiché\" field contains `Viewer`: close the window, and a duck with this name falls on the pile."
+            "en": "The \"Displayed name\" field contains `Viewer`: close the window, and a duck with this name falls on the pile."
           }
         }
       ]
@@ -364,7 +364,7 @@
       },
       "text": {
         "fr": "La fenêtre F8 sur la page Effets, avec les groupes de boutons.",
-        "en": "The F8 window on the Effets page, with the groups of buttons."
+        "en": "The F8 window on the Effects page, with the groups of buttons."
       }
     },
     {
@@ -430,14 +430,14 @@
       "id": "p1-widget-text",
       "type": "paragraph",
       "text": {
-        "fr": "Talky Needle reçoit les mêmes appels que Talky pour Project Zomboid : vous pouvez donc installer le widget officiel de Talky. Son nom mentionne Project Zomboid, mais seule l'adresse du pont décide du jeu qui reçoit vos événements.",
-        "en": "Talky Needle receives the same calls as Talky for Project Zomboid, so you can install the official Talky widget. Its name mentions Project Zomboid, but only the bridge address decides which game receives your events."
+        "fr": "Le widget officiel « Find The Needle · Talky Needle » envoie les événements de votre live au pont, à travers le tunnel. Il est gratuit, et chaque événement a sa case dans sa configuration.",
+        "en": "The official \"Find The Needle · Talky Needle\" widget sends your live events to the bridge, through the tunnel. It is free, and each event has its own checkbox in its settings."
       }
     },
     {
       "id": "p1-widget-card",
       "type": "widget",
-      "listing_slug": "project-zomboid-talky"
+      "listing_slug": "find-the-needle-talky"
     },
     {
       "id": "p1-widget-steps",
@@ -491,8 +491,8 @@
       "rows": [
         [
           {
-            "fr": "Adresse publique du pont Talky",
-            "en": "Public address of the Talky bridge"
+            "fr": "Adresse publique du pont",
+            "en": "Bridge public URL"
           },
           {
             "fr": "L'adresse du tunnel, sans `/` à la fin",
@@ -515,8 +515,8 @@
             "en": "Chat command (without \"!\")"
           },
           {
-            "fr": "`foin` par exemple : vos viewers tapent `!foin`",
-            "en": "`foin` for example: your viewers type `!foin`"
+            "fr": "`foin` par défaut : vos viewers tapent `!foin`",
+            "en": "`foin` by default, `hay` for example: your viewers then type `!hay`"
           }
         ]
       ]
@@ -535,7 +535,7 @@
       "type": "paragraph",
       "text": {
         "fr": "Partie chargée, pont et tunnel ouverts, demandez à un ami de suivre votre chaîne, ou utilisez le test de déclencheur `channelFollow` de LibertyTalk. Le pont écrit le nom du workflow reçu, et la page **Activité** du menu F8 affiche l'événement avec le pseudo du viewer.",
-        "en": "With a game loaded and the bridge and tunnel open, ask a friend to follow your channel, or use the LibertyTalk `channelFollow` trigger test. The **Activité** page of the F8 menu shows the event with the viewer's name."
+        "en": "With a game loaded and the bridge and tunnel open, ask a friend to follow your channel, or use the LibertyTalk `channelFollow` trigger test. The **Activity** page of the F8 menu shows the event with the viewer's name."
       }
     },
     {
@@ -557,14 +557,14 @@
             "en": "Nothing happens when the game starts"
           },
           "a": {
-            "fr": "Vérifiez que `override.cfg` se trouve à côté de `FindTheNeedle.exe` et contient la ligne `TalkyNeedle`. Lancez à nouveau `tools\\install.ps1` si besoin. Le journal du jeu, `%APPDATA%\\Godot\\app_userdata\\FindTheNeedle\\logs\\godot.log`, doit contenir `[TalkyNeedle] v0.1.0 loaded`.",
-            "en": "Check that `override.cfg` is next to `FindTheNeedle.exe` and contains the `TalkyNeedle` line. Run `tools\\install.ps1` again if needed. The game log, `%APPDATA%\\Godot\\app_userdata\\FindTheNeedle\\logs\\godot.log`, must contain `[TalkyNeedle] v0.1.0 loaded`."
+            "fr": "Vérifiez que `override.cfg` se trouve à côté de `FindTheNeedle.exe` et contient la ligne `TalkyNeedle`. Lancez à nouveau `tools\\install.ps1` si besoin. Le journal du jeu, `%APPDATA%\\Godot\\app_userdata\\FindTheNeedle\\logs\\godot.log`, doit contenir `[TalkyNeedle] v0.2.0 loaded`.",
+            "en": "Check that `override.cfg` is next to `FindTheNeedle.exe` and contains the `TalkyNeedle` line. Run `tools\\install.ps1` again if needed. The game log, `%APPDATA%\\Godot\\app_userdata\\FindTheNeedle\\logs\\godot.log`, must contain `[TalkyNeedle] v0.2.0 loaded`."
           }
         },
         {
           "q": {
             "fr": "Le menu affiche « Bridge non connecté »",
-            "en": "The menu shows \"Bridge non connecté\""
+            "en": "The menu shows \"Bridge not connected\""
           },
           "a": {
             "fr": "Lancez `start-bridge.cmd` et laissez sa fenêtre ouverte. Le mod se reconnecte seul toutes les deux secondes.",
@@ -598,7 +598,7 @@
           },
           "a": {
             "fr": "Le pont garde les événements jusqu'à ce qu'une partie soit chargée, pendant 15 minutes au plus. Vérifiez aussi que **Mettre les viewers en pause** est désactivé dans la page Réglages du menu F8.",
-            "en": "The bridge keeps events until a game is loaded, for 15 minutes at most. Also check that **Mettre les viewers en pause** is off on the Réglages page of the F8 menu."
+            "en": "The bridge keeps events until a game is loaded, for 15 minutes at most. Also check that **Pause viewers** is off on the Settings page of the F8 menu."
           }
         },
         {
@@ -779,7 +779,7 @@
       "type": "paragraph",
       "text": {
         "fr": "Chaque bit ajoute des brins de foin selon le multiplicateur : 10 par défaut, donc 500 bits ajoutent 5000 brins. Changez-le dans la page **Réglages** du menu F8 (x1, x2, x5, x10 ou x20) pour la session, ou avec `bitsMultiplier` dans `settings` de `bridgeconfig.json` pour le garder. 300 brins tombent à l'écran au plus : le reste s'ajoute directement au tas et au compteur, pour que votre partie ne gèle pas. Le workflow `bits` plafonne chaque événement à 5000 brins.",
-        "en": "Each bit adds hay straws based on the multiplier: 10 by default, so 500 bits add 5000 straws. Change it on the **Réglages** page of the F8 menu (x1, x2, x5, x10 or x20) for the session, or with `bitsMultiplier` in `settings` of `bridgeconfig.json` to keep it. At most 300 straws fall on screen: the rest goes directly to the pile and the counter, so your game does not freeze. The `bits` workflow caps each event at 5000 straws."
+        "en": "Each bit adds hay straws based on the multiplier: 10 by default, so 500 bits add 5000 straws. Change it on the **Settings** page of the F8 menu (x1, x2, x5, x10 or x20) for the session, or with `bitsMultiplier` in `settings` of `bridgeconfig.json` to keep it. At most 300 straws fall on screen: the rest goes directly to the pile and the counter, so your game does not freeze. The `bits` workflow caps each event at 5000 straws."
       }
     },
     {
@@ -795,8 +795,8 @@
       "id": "p2-points-text",
       "type": "paragraph",
       "text": {
-        "fr": "Le webhook `points` choisit le workflow selon le titre de la récompense. Créez une récompense Twitch dont le titre contient un des mots ci-dessous : « Coup de vent sur le tas » lance `points_gust`. La casse ne compte pas, et le premier mot trouvé dans la liste de `bridge\\config.json` l'emporte.",
-        "en": "The `points` webhook picks the workflow from the title of the reward. Create a Twitch reward whose title contains one of the words below: \"Coup de vent sur le tas\" runs `points_gust`. Case does not matter, and the first word found in the list in `bridge\\config.json` wins."
+        "fr": "Le webhook `points` choisit le workflow selon le titre de la récompense. Les mots dépendent de la langue de Windows au premier lancement du pont, français ici. Créez une récompense Twitch dont le titre contient un des mots ci-dessous : « Coup de vent sur le tas » lance `points_gust`. La casse ne compte pas, et le premier mot trouvé dans la liste de `bridge\\config.json` l'emporte.",
+        "en": "The `points` webhook picks the workflow from the title of the reward. The words depend on the Windows language when the bridge first starts, English here. Create a Twitch reward whose title contains one of the words below: \"Wind on the pile\" runs `points_gust`. Case does not matter, and the first word found in the list in `bridge\\config.json` wins."
       }
     },
     {
@@ -820,7 +820,7 @@
         [
           {
             "fr": "`foin`",
-            "en": "`foin`"
+            "en": "`hay`"
           },
           {
             "fr": "Livraison de foin sur le tas",
@@ -834,7 +834,7 @@
         [
           {
             "fr": "`canard`",
-            "en": "`canard`"
+            "en": "`duck`"
           },
           {
             "fr": "Un canard au nom du viewer, de taille aléatoire",
@@ -848,7 +848,7 @@
         [
           {
             "fr": "`prout`",
-            "en": "`prout`"
+            "en": "`fart`"
           },
           {
             "fr": "Un prout synthétisé qui souffle le foin autour de vous",
@@ -862,11 +862,11 @@
         [
           {
             "fr": "`aiguille`",
-            "en": "`aiguille`"
+            "en": "`needle`"
           },
           {
             "fr": "Fausse alerte : le détecteur bipe, « AIGUILLE TROUVÉE ! », puis « ... non. »",
-            "en": "False alarm: the detector beeps, \"AIGUILLE TROUVÉE !\", then \"... non.\""
+            "en": "False alarm: the detector beeps, \"NEEDLE FOUND!\", then \"... nope.\""
           },
           {
             "fr": "180 s",
@@ -876,7 +876,7 @@
         [
           {
             "fr": "`éjecte`",
-            "en": "`éjecte`"
+            "en": "`launch`"
           },
           {
             "fr": "Vous envoie en l'air",
@@ -890,7 +890,7 @@
         [
           {
             "fr": "`aimant`",
-            "en": "`aimant`"
+            "en": "`magnet`"
           },
           {
             "fr": "Le foin libre vous fonce dessus",
@@ -904,7 +904,7 @@
         [
           {
             "fr": "`lévitation`",
-            "en": "`lévitation`"
+            "en": "`levitat`"
           },
           {
             "fr": "Le foin libre s'envole doucement",
@@ -918,7 +918,7 @@
         [
           {
             "fr": "`bourré`",
-            "en": "`bourré`"
+            "en": "`drunk`"
           },
           {
             "fr": "La caméra tangue",
@@ -932,7 +932,7 @@
         [
           {
             "fr": "`envers`",
-            "en": "`envers`"
+            "en": "`upside`"
           },
           {
             "fr": "L'écran se retourne",
@@ -960,7 +960,7 @@
         [
           {
             "fr": "`toupie`",
-            "en": "`toupie`"
+            "en": "`spin`"
           },
           {
             "fr": "Votre vue tourne sur elle-même",
@@ -974,7 +974,7 @@
         [
           {
             "fr": "`panne`",
-            "en": "`panne`"
+            "en": "`blackout`"
           },
           {
             "fr": "Écran noir, avec le nom du viewer",
@@ -988,7 +988,7 @@
         [
           {
             "fr": "`vent`",
-            "en": "`vent`"
+            "en": "`wind`"
           },
           {
             "fr": "Coup de vent sur le foin",
@@ -1040,7 +1040,7 @@
         [
           {
             "fr": "**Effets**",
-            "en": "**Effets**"
+            "en": "**Effects**"
           },
           {
             "fr": "Déclencher chaque effet à la souris, avec le pseudo de votre choix",
@@ -1060,7 +1060,7 @@
         [
           {
             "fr": "**Activité**",
-            "en": "**Activité**"
+            "en": "**Activity**"
           },
           {
             "fr": "Voir les derniers événements et supprimer les canards",
@@ -1070,7 +1070,7 @@
         [
           {
             "fr": "**Réglages**",
-            "en": "**Réglages**"
+            "en": "**Settings**"
           },
           {
             "fr": "Mettre les viewers en pause, ou activer le mode safe",
@@ -1084,7 +1084,7 @@
       "type": "paragraph",
       "text": {
         "fr": "`F9` supprime tous les canards à tout moment. Sinon, un canard disparaît après 3 minutes, ou 15 minutes pour ceux des abonnements et des dons. Les réglages de la page **Réglages** durent jusqu'au redémarrage du pont. Pour les garder, modifiez `settings` dans `bridge\\config.json`.",
-        "en": "`F9` removes all ducks at any time. Otherwise, a duck disappears after 3 minutes, or 15 minutes for those from subscriptions and donations. The settings on the **Réglages** page last until the bridge restarts. To keep them, edit `settings` in `bridge\\config.json`."
+        "en": "`F9` removes all ducks at any time. Otherwise, a duck disappears after 3 minutes, or 15 minutes for those from subscriptions and donations. The settings on the **Settings** page last until the bridge restarts. To keep them, edit `settings` in `bridge\\config.json`."
       }
     },
     {
@@ -1146,8 +1146,8 @@
       "language": "json",
       "code": "\"bits\": {\n  \"steps\": [\n    { \"action\": \"hay_rain\", \"count\": \"{{bitsMultiplied | clamp:10:2000}}\" },\n    { \"if\": { \"bits\": { \"gte\": 1000 } },\n      \"then\": [ { \"action\": \"duck\", \"name\": \"{{user}}\", \"count\": 5, \"size\": 2 } ] }\n  ]\n}",
       "caption": {
-        "fr": "Le champ `menu` d'un workflow ajoute un bouton dans la page Effets : `\"menu\": { \"label\": \"Mon effet\", \"group\": \"Foin\" }`.",
-        "en": "A workflow's `menu` field adds a button on the Effets page: `\"menu\": { \"label\": \"My effect\", \"group\": \"Foin\" }`."
+        "fr": "Le champ `menu` d'un workflow ajoute un bouton dans la page Effets : `\"menu\": { \"label\": \"Mon effet\", \"group\": \"hay\" }`.",
+        "en": "A workflow's `menu` field adds a button on the Effects page: `\"menu\": { \"label\": \"My effect\", \"group\": \"hay\" }`."
       }
     },
     {

@@ -1,0 +1,219 @@
+{
+  "_about": "French texts of the example workflows, applied once when the bridge creates config.json on a French system. Each entry replaces the text only if it still equals the English one.",
+  "settings.anonymousName": {
+    "en": "Anonymous",
+    "fr": "Anonyme"
+  },
+  "webhooks.points.routes.0.when.reward_title.contains": {
+    "en": "hay",
+    "fr": "foin"
+  },
+  "webhooks.points.routes.1.when.reward_title.contains": {
+    "en": "duck",
+    "fr": "canard"
+  },
+  "webhooks.points.routes.2.when.reward_title.contains": {
+    "en": "fart",
+    "fr": "prout"
+  },
+  "webhooks.points.routes.3.when.reward_title.contains": {
+    "en": "needle",
+    "fr": "aiguille"
+  },
+  "webhooks.points.routes.4.when.reward_title.contains": {
+    "en": "launch",
+    "fr": "éjecte"
+  },
+  "webhooks.points.routes.5.when.reward_title.contains": {
+    "en": "magnet",
+    "fr": "aimant"
+  },
+  "webhooks.points.routes.6.when.reward_title.contains": {
+    "en": "levitat",
+    "fr": "lévitation"
+  },
+  "webhooks.points.routes.7.when.reward_title.contains": {
+    "en": "drunk",
+    "fr": "bourré"
+  },
+  "webhooks.points.routes.8.when.reward_title.contains": {
+    "en": "upside",
+    "fr": "envers"
+  },
+  "webhooks.points.routes.9.when.reward_title.contains": {
+    "en": "zoom",
+    "fr": "zoom"
+  },
+  "webhooks.points.routes.10.when.reward_title.contains": {
+    "en": "spin",
+    "fr": "toupie"
+  },
+  "webhooks.points.routes.11.when.reward_title.contains": {
+    "en": "blackout",
+    "fr": "panne"
+  },
+  "webhooks.points.routes.12.when.reward_title.contains": {
+    "en": "wind",
+    "fr": "vent"
+  },
+  "workflows.new_follower.steps.0.text": {
+    "en": "{{user}} lands on the pile!",
+    "fr": "{{user}} débarque sur le tas !"
+  },
+  "workflows.new_sub.steps.1.text": {
+    "en": "{{user}} subscribed: giant duck!",
+    "fr": "{{user}} s'abonne : canard géant !"
+  },
+  "workflows.gift_subs.steps.0.text": {
+    "en": "{{user}} gifts {{total | default:1}} subs: DUCK RAIN!",
+    "fr": "{{user}} offre {{total | default:1}} abos : PLUIE DE CANARDS !"
+  },
+  "workflows.bits.steps.0.then.0.text": {
+    "en": "{{bits}} bits from {{user}}: AVALANCHE!",
+    "fr": "{{bits}} bits de {{user}} : AVALANCHE !"
+  },
+  "workflows.bits.steps.0.else.0.text": {
+    "en": "{{user}} adds hay ({{bits}} bits)",
+    "fr": "{{user}} ajoute du foin ({{bits}} bits)"
+  },
+  "workflows.raid.steps.0.text": {
+    "en": "HAY RAID: {{user}} arrives with {{viewers | default:1}} viewers!",
+    "fr": "RAID DE FOIN : {{user}} arrive avec {{viewers | default:1}} viewers !"
+  },
+  "workflows.donation.steps.0.text": {
+    "en": "Thanks {{user}}!",
+    "fr": "Merci {{user}} !"
+  },
+  "workflows.points_hay.steps.0.text": {
+    "en": "{{user}} orders a hay delivery",
+    "fr": "{{user}} commande une livraison de foin"
+  },
+  "workflows.points_fart.steps.0.text": {
+    "en": "{{user}} let one rip in the barn",
+    "fr": "{{user}} a lâché une caisse dans la grange"
+  },
+  "workflows.points_fake_needle.steps.9.text": {
+    "en": "NEEDLE FOUND!",
+    "fr": "AIGUILLE TROUVÉE !"
+  },
+  "workflows.points_fake_needle.steps.12.text": {
+    "en": "... nope. Thanks {{user}}.",
+    "fr": "... non. Merci {{user}}."
+  },
+  "workflows.points_yeet.steps.0.text": {
+    "en": "{{user}} sends you flying!",
+    "fr": "{{user}} t'envoie en l'air !"
+  },
+  "workflows.points_magnet.steps.0.text": {
+    "en": "{{user}}: all the hay loves you",
+    "fr": "{{user}} : tout le foin t'adore"
+  },
+  "workflows.points_levitate.steps.0.text": {
+    "en": "{{user}} turns off gravity for the hay",
+    "fr": "{{user}} coupe la gravité du foin"
+  },
+  "workflows.points_drunk.steps.0.text": {
+    "en": "{{user}} buys a round",
+    "fr": "{{user}} paye sa tournée"
+  },
+  "workflows.points_upside_down.steps.0.text": {
+    "en": "{{user}} flips the screen",
+    "fr": "{{user}} retourne l'écran"
+  },
+  "workflows.points_spin.steps.0.text": {
+    "en": "{{user}} spins you around",
+    "fr": "{{user}} te fait tourner"
+  },
+  "workflows.points_blackout.steps.0.text": {
+    "en": "{{user}} didn't pay the power bill",
+    "fr": "{{user}} n'a pas payé l'électricité"
+  },
+  "workflows.points_gust.steps.0.text": {
+    "en": "{{user}} blows on the hay!",
+    "fr": "{{user}} souffle sur le foin !"
+  },
+  "workflows.on_needle_found.steps.0.text": {
+    "en": "NEEDLE FOUND!",
+    "fr": "AIGUILLE TROUVÉE !"
+  },
+  "workflows.points_hay.menu.label": {
+    "en": "Hay delivery",
+    "fr": "Livraison de foin"
+  },
+  "workflows.points_magnet.menu.label": {
+    "en": "Hay magnet",
+    "fr": "Aimant à foin"
+  },
+  "workflows.points_levitate.menu.label": {
+    "en": "Levitation",
+    "fr": "Lévitation"
+  },
+  "workflows.points_gust.menu.label": {
+    "en": "Gust of wind",
+    "fr": "Coup de vent"
+  },
+  "workflows.points_duck.menu.label": {
+    "en": "Duck",
+    "fr": "Canard"
+  },
+  "workflows.clear_ducks.menu.label": {
+    "en": "Remove the ducks",
+    "fr": "Supprimer les canards"
+  },
+  "workflows.points_fart.menu.label": {
+    "en": "Fart",
+    "fr": "Prout"
+  },
+  "workflows.points_fake_needle.menu.label": {
+    "en": "Fake needle",
+    "fr": "Fausse aiguille"
+  },
+  "workflows.points_yeet.menu.label": {
+    "en": "Launch",
+    "fr": "Éjection"
+  },
+  "workflows.points_spin.menu.label": {
+    "en": "Spin",
+    "fr": "Toupie"
+  },
+  "workflows.points_drunk.menu.label": {
+    "en": "Drunk",
+    "fr": "Bourré"
+  },
+  "workflows.points_upside_down.menu.label": {
+    "en": "Upside down",
+    "fr": "À l'envers"
+  },
+  "workflows.points_quake_pro.menu.label": {
+    "en": "Extreme zoom",
+    "fr": "Zoom extrême"
+  },
+  "workflows.points_blackout.menu.label": {
+    "en": "Blackout",
+    "fr": "Panne de courant"
+  },
+  "workflows.new_follower.menu.label": {
+    "en": "Follow",
+    "fr": "Follow"
+  },
+  "workflows.new_sub.menu.label": {
+    "en": "Subscription",
+    "fr": "Abonnement"
+  },
+  "workflows.gift_subs.menu.label": {
+    "en": "10 gifted subs",
+    "fr": "10 abos offerts"
+  },
+  "workflows.bits.menu.label": {
+    "en": "500 bits",
+    "fr": "500 bits"
+  },
+  "workflows.raid.menu.label": {
+    "en": "Raid (50 viewers)",
+    "fr": "Raid (50 viewers)"
+  },
+  "workflows.donation.menu.label": {
+    "en": "Donation",
+    "fr": "Don"
+  }
+}

@@ -21,6 +21,7 @@ const crypto = require('crypto');
 const { spawnSync } = require('child_process');
 const { expand, test, buildVars, arr, toNum } = require('./lib/engine');
 const { checkHttpUrl } = require('./lib/hosts');
+const { localizeExamples } = require('./lib/examples');
 
 const VERSION = require('./package.json').version;
 const PROTOCOL = 1;
@@ -408,13 +409,29 @@ class Bridge {
 
 // ------------------------------------------------------------------ config
 
+// "fr" when the system's regional format is French, "en" otherwise.
+function systemLanguage(locale) {
+  let l = locale;
+  if (l === undefined) {
+    try {
+      l = Intl.DateTimeFormat().resolvedOptions().locale;
+    } catch {
+      l = '';
+    }
+  }
+  return /^fr(?![a-z])/i.test(String(l || '')) ? 'fr' : 'en';
+}
+
 // First start: config.json gets a random token, copied to the clipboard and never shown,
 // so it stays off the stream.
 function loadConfig() {
   if (!fs.existsSync(CONFIG_PATH)) {
     const token = crypto.randomBytes(24).toString('hex');
-    const text = fs.readFileSync(EXAMPLE_PATH, 'utf8').replace(PLACEHOLDER_TOKEN, token);
-    fs.writeFileSync(CONFIG_PATH, text, { flag: 'wx' });
+    const config = JSON.parse(fs.readFileSync(EXAMPLE_PATH, 'utf8'));
+    config.token = token;
+    config.settings.language = systemLanguage();
+    localizeExamples(config, config.settings.language);
+    fs.writeFileSync(CONFIG_PATH, `${JSON.stringify(config, null, 2)}\n`, { flag: 'wx' });
     const copied = process.platform === 'win32' && spawnSync('clip', { input: token }).status === 0;
     log(`created config.json with a random token, ${copied ? 'copied to your clipboard' : 'see "token" in config.json'}; never shown here`);
   }
@@ -458,4 +475,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { Bridge, parseBody, safeEqual, PROTOCOL };
+module.exports = { Bridge, parseBody, safeEqual, systemLanguage, PROTOCOL };

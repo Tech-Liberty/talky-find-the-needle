@@ -15,7 +15,8 @@
     }
   },
   "settings": {
-    "anonymousName": "Anonyme",
+    "language": "en",
+    "anonymousName": "Anonymous",
     "maxJobsPerMinute": 30,
     "bitsMultiplier": 10,
     "blockedActions": [],
@@ -65,7 +66,7 @@
         {
           "when": {
             "reward_title": {
-              "contains": "foin"
+              "contains": "hay"
             }
           },
           "workflow": "points_hay"
@@ -73,7 +74,7 @@
         {
           "when": {
             "reward_title": {
-              "contains": "canard"
+              "contains": "duck"
             }
           },
           "workflow": "points_duck"
@@ -81,7 +82,7 @@
         {
           "when": {
             "reward_title": {
-              "contains": "prout"
+              "contains": "fart"
             }
           },
           "workflow": "points_fart"
@@ -89,7 +90,7 @@
         {
           "when": {
             "reward_title": {
-              "contains": "aiguille"
+              "contains": "needle"
             }
           },
           "workflow": "points_fake_needle"
@@ -97,7 +98,7 @@
         {
           "when": {
             "reward_title": {
-              "contains": "éjecte"
+              "contains": "launch"
             }
           },
           "workflow": "points_yeet"
@@ -105,7 +106,7 @@
         {
           "when": {
             "reward_title": {
-              "contains": "aimant"
+              "contains": "magnet"
             }
           },
           "workflow": "points_magnet"
@@ -113,7 +114,7 @@
         {
           "when": {
             "reward_title": {
-              "contains": "lévitation"
+              "contains": "levitat"
             }
           },
           "workflow": "points_levitate"
@@ -121,7 +122,7 @@
         {
           "when": {
             "reward_title": {
-              "contains": "bourré"
+              "contains": "drunk"
             }
           },
           "workflow": "points_drunk"
@@ -129,7 +130,7 @@
         {
           "when": {
             "reward_title": {
-              "contains": "envers"
+              "contains": "upside"
             }
           },
           "workflow": "points_upside_down"
@@ -145,7 +146,7 @@
         {
           "when": {
             "reward_title": {
-              "contains": "toupie"
+              "contains": "spin"
             }
           },
           "workflow": "points_spin"
@@ -153,7 +154,7 @@
         {
           "when": {
             "reward_title": {
-              "contains": "panne"
+              "contains": "blackout"
             }
           },
           "workflow": "points_blackout"
@@ -161,7 +162,7 @@
         {
           "when": {
             "reward_title": {
-              "contains": "vent"
+              "contains": "wind"
             }
           },
           "workflow": "points_gust"
@@ -180,12 +181,12 @@
     "new_follower": {
       "menu": {
         "label": "Follow",
-        "group": "Événements"
+        "group": "events"
       },
       "steps": [
         {
           "action": "notify",
-          "text": "{{user}} débarque sur le tas !"
+          "text": "{{user}} lands on the pile!"
         },
         {
           "action": "duck",
@@ -196,8 +197,8 @@
     },
     "new_sub": {
       "menu": {
-        "label": "Abonnement",
-        "group": "Événements"
+        "label": "Subscription",
+        "group": "events"
       },
       "steps": [
         {
@@ -207,7 +208,7 @@
         },
         {
           "action": "notify",
-          "text": "{{user}} s'abonne : canard géant !",
+          "text": "{{user}} subscribed: giant duck!",
           "color": "#ffd54f"
         },
         {
@@ -220,8 +221,8 @@
     },
     "gift_subs": {
       "menu": {
-        "label": "10 abos offerts",
-        "group": "Événements",
+        "label": "10 gifted subs",
+        "group": "events",
         "payload": {
           "total": 10
         }
@@ -229,7 +230,7 @@
       "steps": [
         {
           "action": "notify",
-          "text": "{{user}} offre {{total | default:1}} abos : PLUIE DE CANARDS !",
+          "text": "{{user}} gifts {{total | default:1}} subs: DUCK RAIN!",
           "color": "#ff8a65"
         },
         {
@@ -243,7 +244,7 @@
     "bits": {
       "menu": {
         "label": "500 bits",
-        "group": "Événements",
+        "group": "events",
         "payload": {
           "bits": 500
         }
@@ -258,7 +259,7 @@
           "then": [
             {
               "action": "notify",
-              "text": "{{bits}} bits de {{user}} : AVALANCHE !",
+              "text": "{{bits}} bits from {{user}}: AVALANCHE!",
               "color": "#ff1744"
             },
             {
@@ -274,7 +275,7 @@
           "else": [
             {
               "action": "notify",
-              "text": "{{user}} ajoute du foin ({{bits}} bits)"
+              "text": "{{user}} adds hay ({{bits}} bits)"
             },
             {
               "action": "hay_rain",
@@ -287,7 +288,7 @@
     "raid": {
       "menu": {
         "label": "Raid (50 viewers)",
-        "group": "Événements",
+        "group": "events",
         "payload": {
           "viewers": 50
         }
@@ -295,7 +296,7 @@
       "steps": [
         {
           "action": "notify",
-          "text": "RAID DE FOIN : {{user}} arrive avec {{viewers | default:1}} viewers !",
+          "text": "HAY RAID: {{user}} arrives with {{viewers | default:1}} viewers!",
           "color": "#b388ff"
         },
         {
@@ -315,13 +316,13 @@
     },
     "donation": {
       "menu": {
-        "label": "Don",
-        "group": "Événements"
+        "label": "Donation",
+        "group": "events"
       },
       "steps": [
         {
           "action": "notify",
-          "text": "Merci {{user}} !",
+          "text": "Thanks {{user}}!",
           "color": "#69f0ae"
         },
         {
@@ -343,14 +344,14 @@
     },
     "points_hay": {
       "menu": {
-        "label": "Livraison de foin",
-        "group": "Foin"
+        "label": "Hay delivery",
+        "group": "hay"
       },
       "cooldownSeconds": 30,
       "steps": [
         {
           "action": "notify",
-          "text": "{{user}} commande une livraison de foin"
+          "text": "{{user}} orders a hay delivery"
         },
         {
           "action": "hay_rain",
@@ -360,8 +361,8 @@
     },
     "points_duck": {
       "menu": {
-        "label": "Canard",
-        "group": "Canards"
+        "label": "Duck",
+        "group": "ducks"
       },
       "cooldownSeconds": 20,
       "steps": [
@@ -374,14 +375,14 @@
     },
     "points_fart": {
       "menu": {
-        "label": "Prout",
-        "group": "Troll"
+        "label": "Fart",
+        "group": "troll"
       },
       "cooldownSeconds": 30,
       "steps": [
         {
           "action": "notify",
-          "text": "{{user}} a lâché une caisse dans la grange"
+          "text": "{{user}} let one rip in the barn"
         },
         {
           "action": "hay_rain",
@@ -403,8 +404,8 @@
     },
     "points_fake_needle": {
       "menu": {
-        "label": "Fausse aiguille",
-        "group": "Troll"
+        "label": "Fake needle",
+        "group": "troll"
       },
       "cooldownSeconds": 180,
       "steps": [
@@ -456,7 +457,7 @@
         },
         {
           "action": "notify",
-          "text": "AIGUILLE TROUVÉE !",
+          "text": "NEEDLE FOUND!",
           "color": "#ffd54f",
           "seconds": 3
         },
@@ -470,21 +471,21 @@
         },
         {
           "action": "notify",
-          "text": "... non. Merci {{user}}.",
+          "text": "... nope. Thanks {{user}}.",
           "seconds": 4
         }
       ]
     },
     "points_yeet": {
       "menu": {
-        "label": "Éjection",
-        "group": "Joueur"
+        "label": "Launch",
+        "group": "player"
       },
       "cooldownSeconds": 60,
       "steps": [
         {
           "action": "notify",
-          "text": "{{user}} t'envoie en l'air !",
+          "text": "{{user}} sends you flying!",
           "color": "#ff8a65"
         },
         {
@@ -495,14 +496,14 @@
     },
     "points_magnet": {
       "menu": {
-        "label": "Aimant à foin",
-        "group": "Foin"
+        "label": "Hay magnet",
+        "group": "hay"
       },
       "cooldownSeconds": 120,
       "steps": [
         {
           "action": "notify",
-          "text": "{{user}} : tout le foin t'adore",
+          "text": "{{user}}: all the hay loves you",
           "color": "#ff80ab"
         },
         {
@@ -519,14 +520,14 @@
     },
     "points_levitate": {
       "menu": {
-        "label": "Lévitation",
-        "group": "Foin"
+        "label": "Levitation",
+        "group": "hay"
       },
       "cooldownSeconds": 120,
       "steps": [
         {
           "action": "notify",
-          "text": "{{user}} coupe la gravité du foin",
+          "text": "{{user}} turns off gravity for the hay",
           "color": "#b388ff"
         },
         {
@@ -544,14 +545,14 @@
     },
     "points_drunk": {
       "menu": {
-        "label": "Bourré",
-        "group": "Écran"
+        "label": "Drunk",
+        "group": "screen"
       },
       "cooldownSeconds": 180,
       "steps": [
         {
           "action": "notify",
-          "text": "{{user}} paye sa tournée",
+          "text": "{{user}} buys a round",
           "color": "#ffab40"
         },
         {
@@ -562,14 +563,14 @@
     },
     "points_upside_down": {
       "menu": {
-        "label": "À l'envers",
-        "group": "Écran"
+        "label": "Upside down",
+        "group": "screen"
       },
       "cooldownSeconds": 180,
       "steps": [
         {
           "action": "notify",
-          "text": "{{user}} retourne l'écran",
+          "text": "{{user}} flips the screen",
           "color": "#ffab40"
         },
         {
@@ -580,8 +581,8 @@
     },
     "points_quake_pro": {
       "menu": {
-        "label": "Zoom extrême",
-        "group": "Écran"
+        "label": "Extreme zoom",
+        "group": "screen"
       },
       "cooldownSeconds": 120,
       "steps": [
@@ -593,14 +594,14 @@
     },
     "points_spin": {
       "menu": {
-        "label": "Toupie",
-        "group": "Joueur"
+        "label": "Spin",
+        "group": "player"
       },
       "cooldownSeconds": 90,
       "steps": [
         {
           "action": "notify",
-          "text": "{{user}} te fait tourner"
+          "text": "{{user}} spins you around"
         },
         {
           "action": "spin",
@@ -611,28 +612,28 @@
     },
     "points_blackout": {
       "menu": {
-        "label": "Panne de courant",
-        "group": "Écran"
+        "label": "Blackout",
+        "group": "screen"
       },
       "cooldownSeconds": 180,
       "steps": [
         {
           "action": "blackout",
           "seconds": 4,
-          "text": "{{user}} n'a pas payé l'électricité"
+          "text": "{{user}} didn't pay the power bill"
         }
       ]
     },
     "points_gust": {
       "menu": {
-        "label": "Coup de vent",
-        "group": "Foin"
+        "label": "Gust of wind",
+        "group": "hay"
       },
       "cooldownSeconds": 60,
       "steps": [
         {
           "action": "notify",
-          "text": "{{user}} souffle sur le foin !"
+          "text": "{{user}} blows on the hay!"
         },
         {
           "action": "hay_rain",
@@ -660,8 +661,8 @@
     },
     "clear_ducks": {
       "menu": {
-        "label": "Supprimer les canards",
-        "group": "Canards"
+        "label": "Remove the ducks",
+        "group": "ducks"
       },
       "steps": [
         {
@@ -673,7 +674,7 @@
       "steps": [
         {
           "action": "notify",
-          "text": "AIGUILLE TROUVÉE !",
+          "text": "NEEDLE FOUND!",
           "color": "#ffd54f",
           "seconds": 6
         }
@@ -705,7 +706,8 @@
         {
           "action": "menu",
           "open": true,
-          "tab": "{{tab | default:effects}}"
+          "tab": "{{tab | default:effects}}",
+          "language": "{{language}}"
         }
       ]
     },

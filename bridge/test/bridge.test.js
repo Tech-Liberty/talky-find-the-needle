@@ -112,7 +112,7 @@ test('points are routed on the reward title, and no match runs nothing', async (
   const game = await connectGame();
   const none = await (await post('/hooks/points', { user_name: 'A', reward_title: 'Hydrate-toi' })).json();
   assert.deepStrictEqual(none.results, []);
-  await post('/hooks/points', { user_name: 'A', reward_title: 'Coup de VENT' });
+  await post('/hooks/points', { user_name: 'A', reward_title: 'Gust of WIND' });
   const job = await game.nextJob();
   assert.strictEqual(job.workflow, 'points_gust');
 });
@@ -260,6 +260,34 @@ test('bits are multiplied, capped by the workflow, and the multiplier can change
   assert.strictEqual(third.steps.find((s) => s.action === 'hay_rain').count, 5000);
 });
 
+test('every example text has its French version, and French rewards are routed', async (t) => {
+  const example = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'config.example.json'), 'utf8'));
+  const overlay = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'locales', 'examples.fr.json'), 'utf8'));
+  const { localizeExamples, resolvePath } = require('../lib/examples');
+  const { systemLanguage } = require('../bridge');
+  for (const dot of Object.keys(overlay).filter((k) => !k.startsWith('_'))) {
+    const found = resolvePath(example, dot);
+    assert.ok(found, `missing path ${dot}`);
+    assert.strictEqual(found[0][found[1]], overlay[dot].en, dot);
+  }
+  const texts = [];
+  JSON.stringify(example.workflows, (key, value) => {
+    if ((key === 'text' || key === 'label') && typeof value === 'string') texts.push(value);
+    return value;
+  });
+  const covered = new Set(Object.values(overlay).map((e) => e.en));
+  assert.deepStrictEqual(texts.filter((v) => !covered.has(v) && !/^\{\{[^}]*\}\}$/.test(v)), []);
+  const french = JSON.parse(JSON.stringify(example));
+  assert.strictEqual(localizeExamples(french, 'fr', overlay), Object.keys(overlay).length - 1);
+  assert.strictEqual(french.settings.anonymousName, 'Anonyme');
+  assert.strictEqual(systemLanguage('fr-FR'), 'fr');
+  assert.strictEqual(systemLanguage('de-DE'), 'en');
+  const { post, connectGame } = await setup(t, { webhooks: french.webhooks, workflows: french.workflows });
+  const game = await connectGame();
+  await post('/hooks/points', { user_name: 'A', reward_title: 'Coup de VENT' });
+  assert.strictEqual((await game.nextJob()).workflow, 'points_gust');
+});
+
 test('the example config only uses actions the mod has', () => {
   const source = fs.readFileSync(path.join(__dirname, '..', '..', 'mods', 'talky_needle', 'tn_actions.gd'), 'utf8');
   const known = new Set([...source.matchAll(/register\("(\w+)"/g)].map((m) => m[1]));
@@ -275,7 +303,7 @@ test('the fake needle workflow expands to a growing series of beeps', async (t) 
   await post('/fire/points_fake_needle', { user_name: 'A' });
   const job = await game.nextJob();
   assert.strictEqual(job.steps.filter((s) => s.name === 'beep').length, 12);
-  assert.match(job.steps.at(-1).text, /Merci A/);
+  assert.match(job.steps.at(-1).text, /Thanks A/);
 });
 
 test('a game event runs its workflow; an unfilled http target is refused without a request', async (t) => {

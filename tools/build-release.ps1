@@ -11,10 +11,10 @@ if ($modText -notmatch 'const VERSION := "([^"]+)"') { throw 'VERSION not found 
 if ($Matches[1] -ne $version) { throw "package.json says $version but talky_needle.gd says $($Matches[1])" }
 
 $files = @(
-    'README.md', 'LICENSE', 'start-bridge.cmd', 'tools\install.ps1',
+    'README.md', 'README.fr.md', 'LICENSE', 'start-bridge.cmd', 'tools\install.ps1',
     'bridge\bridge.js', 'bridge\package.json', 'bridge\config.example.json',
-    'bridge\lib\engine.js', 'bridge\lib\hosts.js',
-    'mods\talky_needle\talky_needle.gd', 'mods\talky_needle\tn_actions.gd', 'mods\talky_needle\tn_menu.gd'
+    'bridge\lib\engine.js', 'bridge\lib\hosts.js', 'bridge\lib\examples.js', 'bridge\locales\examples.fr.json',
+    'mods\talky_needle\talky_needle.gd', 'mods\talky_needle\tn_actions.gd', 'mods\talky_needle\tn_menu.gd', 'mods\talky_needle\tn_i18n.gd'
 )
 
 $dist = Join-Path $root 'dist'

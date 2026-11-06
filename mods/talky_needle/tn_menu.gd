@@ -16,14 +16,14 @@ const COL_LINE := Color(1.0, 1.0, 1.0, 0.09)
 const COL_OK := Color(0.45, 0.9, 0.5)
 const COL_BAD := Color(1.0, 0.42, 0.38)
 
-const TABS := [["effects", "Effets"], ["message", "Message"], ["activity", "Activité"], ["settings", "Réglages"]]
+const TABS := ["effects", "message", "activity", "settings"]
 const GROUPS := {
-	"Foin": Color(0.87, 0.69, 0.3),
-	"Canards": Color(1.0, 0.82, 0.1),
-	"Troll": Color(0.62, 0.86, 0.3),
-	"Joueur": Color(1.0, 0.54, 0.4),
-	"Écran": Color(0.7, 0.53, 1.0),
-	"Événements": Color(0.25, 0.77, 1.0),
+	"hay": Color(0.87, 0.69, 0.3),
+	"ducks": Color(1.0, 0.82, 0.1),
+	"troll": Color(0.62, 0.86, 0.3),
+	"player": Color(1.0, 0.54, 0.4),
+	"screen": Color(0.7, 0.53, 1.0),
+	"events": Color(0.25, 0.77, 1.0),
 }
 const MESSAGE_COLORS := ["#ffd11a", "#69f0ae", "#40c4ff", "#ff80ab", "#ff5252"]
 const MESSAGE_SECONDS := [4.0, 6.0, 10.0, 15.0]
@@ -142,7 +142,7 @@ func _thaw_player() -> void:
 # ---------------------------------------------------------------- live data
 func _refresh() -> void:
 	var connected: bool = mod.bridge_connected()
-	_status.text = "Bridge connecté" if connected else "Bridge non connecté"
+	_status.text = _t("connected") if connected else _t("disconnected")
 	_status.add_theme_color_override("font_color", COL_OK if connected else COL_BAD)
 	if _catalog_seen != int(mod.catalog_version):
 		_catalog_seen = int(mod.catalog_version)
@@ -157,7 +157,7 @@ func _refresh() -> void:
 		_activity_seen = int(mod.activity_version)
 		_rebuild_activity()
 	var ducks: int = mod.actions.duck_count()
-	_ducks_button.text = "Supprimer les canards (%d)" % ducks
+	_ducks_button.text = _t("remove_ducks") % ducks
 	_ducks_button.disabled = ducks == 0
 
 
@@ -166,7 +166,7 @@ func _rebuild_effects() -> void:
 		child.queue_free()
 	var catalog: Array = mod.catalog
 	if catalog.is_empty():
-		_effects_box.add_child(_label("Lance start-bridge.cmd pour afficher les effets.", 18, COL_DIM))
+		_effects_box.add_child(_label(_t("start_bridge"), 18, COL_DIM))
 		return
 	var by_group := {}
 	for w: Variant in catalog:
@@ -185,7 +185,7 @@ func _rebuild_effects() -> void:
 
 func _add_effect_group(group: String, effects: Array) -> void:
 	var accent: Color = GROUPS.get(group, COL_AMBER)
-	var heading := _label(group.to_upper(), 15, accent)
+	var heading := _label(_t("group_" + group) if GROUPS.has(group) else group.to_upper(), 15, accent)
 	_effects_box.add_child(heading)
 	var grid := GridContainer.new()
 	grid.columns = 4
@@ -211,7 +211,7 @@ func _rebuild_activity() -> void:
 		child.queue_free()
 	var rows: Array = mod.activity.filter(func(row: Dictionary) -> bool: return not str(row["label"]).begins_with("dev_"))
 	if rows.is_empty():
-		_activity_box.add_child(_label("Rien pour l'instant.", 16, COL_DIM))
+		_activity_box.add_child(_label(_t("nothing_yet"), 16, COL_DIM))
 		return
 	for i in range(rows.size() - 1, -1, -1):
 		var row: Dictionary = rows[i]
@@ -222,7 +222,7 @@ func _rebuild_activity() -> void:
 		line.add_child(_label(str(row["label"]), 16, COL_TEXT))
 		line.add_child(_label(str(row["user"]), 16, COL_AMBER))
 		if not failures.is_empty():
-			line.add_child(_label("échec : %s" % ", ".join(failures), 15, COL_BAD))
+			line.add_child(_label(_t("failed") % ", ".join(failures), 15, COL_BAD))
 		_activity_box.add_child(line)
 
 
@@ -230,9 +230,9 @@ func _rebuild_activity() -> void:
 func _on_effect(id: String, label: String) -> void:
 	var user := _user_edit.text.strip_edges()
 	if mod.fire_workflow(id, user):
-		_say("Envoyé : %s" % label, COL_OK)
+		_say(_t("sent") % label, COL_OK)
 	else:
-		_say("Bridge non connecté", COL_BAD)
+		_say(_t("disconnected"), COL_BAD)
 
 
 func _on_send_message() -> void:
@@ -250,11 +250,11 @@ func _on_send_message() -> void:
 	match code:
 		"":
 			_text_edit.text = ""
-			_say("Message envoyé", COL_OK)
+			_say(_t("message_sent"), COL_OK)
 		"queue_full":
-			_say("Trop de messages en attente", COL_BAD)
+			_say(_t("too_many"), COL_BAD)
 		_:
-			_say("Écris un message d'abord", COL_BAD)
+			_say(_t("write_first"), COL_BAD)
 
 
 func _on_toggle_changed(_pressed: bool, button: Button) -> void:
@@ -271,7 +271,7 @@ func _send_settings() -> void:
 
 
 func _update_toggle_text(button: Button) -> void:
-	button.text = "ACTIVÉ" if button.button_pressed else "DÉSACTIVÉ"
+	button.text = _t("on") if button.button_pressed else _t("off")
 
 
 func _say(text: String, color: Color) -> void:
@@ -285,6 +285,8 @@ func _build() -> void:
 	var font: Font = mod.game_font()
 	if font != null:
 		theme_used.default_font = font
+	# The game's own translations would rewrite any text they recognise ("Effects", "HAY"...).
+	auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
 	_backdrop = ColorRect.new()
 	_backdrop.color = Color(0.0, 0.0, 0.0, 0.5)
 	add_child(_backdrop)
@@ -320,6 +322,7 @@ func _build() -> void:
 	body.add_child(content)
 	column.add_child(_line())
 	column.add_child(_build_footer())
+	_stop_game_translation(self)
 
 
 func _build_header() -> Control:
@@ -329,7 +332,7 @@ func _build_header() -> Control:
 	row.add_theme_constant_override("separation", 14)
 	bar.add_child(row)
 	row.add_child(_label("TALKY NEEDLE", 30, COL_AMBER))
-	var tag := _label("MOD NON OFFICIEL", 13, COL_DIM)
+	var tag := _label(_t("unofficial"), 13, COL_DIM)
 	tag.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	row.add_child(tag)
 	var spacer := Control.new()
@@ -339,7 +342,7 @@ func _build_header() -> Control:
 	_status.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	row.add_child(_status)
 	var close_button := Button.new()
-	close_button.text = "Fermer  (F8)"
+	close_button.text = _t("close")
 	_style_card(close_button, COL_LINE)
 	close_button.custom_minimum_size = Vector2(130.0, 40.0)
 	close_button.pressed.connect(close)
@@ -355,9 +358,9 @@ func _build_sidebar() -> Control:
 	column.add_theme_constant_override("separation", 6)
 	side.add_child(column)
 	var group := ButtonGroup.new()
-	for tab: Array in TABS:
+	for tab: String in TABS:
 		var button := Button.new()
-		button.text = str(tab[1])
+		button.text = _t("tab_" + tab)
 		button.toggle_mode = true
 		button.button_group = group
 		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
@@ -375,8 +378,8 @@ func _build_sidebar() -> Control:
 		selected.border_color = COL_ORANGE
 		button.add_theme_stylebox_override("pressed", selected)
 		button.add_theme_stylebox_override("hover_pressed", selected)
-		button.pressed.connect(select_tab.bind(str(tab[0])))
-		_tab_buttons[str(tab[0])] = button
+		button.pressed.connect(select_tab.bind(tab))
+		_tab_buttons[tab] = button
 		column.add_child(button)
 	return side
 
@@ -386,7 +389,7 @@ func _build_footer() -> Control:
 	bar.add_theme_stylebox_override("panel", _box(Color(0.0, 0.0, 0.0, 0.0), 0, 12.0))
 	var row := HBoxContainer.new()
 	bar.add_child(row)
-	row.add_child(_label("F9 : supprimer les canards", 14, COL_DIM))
+	row.add_child(_label(_t("footer"), 14, COL_DIM))
 	var spacer := Control.new()
 	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	row.add_child(spacer)
@@ -401,7 +404,7 @@ func _build_effects_page() -> Control:
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 10)
 	page.add_child(row)
-	var caption := _label("Pseudo affiché", 16, COL_DIM)
+	var caption := _label(_t("name_caption"), 16, COL_DIM)
 	row.add_child(caption)
 	_user_edit = _field("Viewer", 260.0)
 	_user_edit.text = "Viewer"
@@ -420,11 +423,11 @@ func _build_effects_page() -> Control:
 func _build_message_page() -> Control:
 	var page := VBoxContainer.new()
 	page.add_theme_constant_override("separation", 12)
-	page.add_child(_label("Auteur", 16, COL_DIM))
-	_author_edit = _field("Facultatif", 380.0)
+	page.add_child(_label(_t("author"), 16, COL_DIM))
+	_author_edit = _field(_t("optional"), 380.0)
 	_author_edit.max_length = 40
 	page.add_child(_author_edit)
-	page.add_child(_label("Message (200 caractères au plus)", 16, COL_DIM))
+	page.add_child(_label(_t("message_caption"), 16, COL_DIM))
 	_text_edit = TextEdit.new()
 	_text_edit.custom_minimum_size = Vector2(0.0, 150.0)
 	_text_edit.wrap_mode = TextEdit.LINE_WRAPPING_BOUNDARY
@@ -434,7 +437,7 @@ func _build_message_page() -> Control:
 	_text_edit.add_theme_stylebox_override("normal", _box(COL_FIELD, 8, 12.0))
 	_text_edit.add_theme_stylebox_override("focus", _box(COL_FIELD, 8, 12.0))
 	page.add_child(_text_edit)
-	page.add_child(_label("Couleur", 16, COL_DIM))
+	page.add_child(_label(_t("color"), 16, COL_DIM))
 	var colors := HBoxContainer.new()
 	colors.add_theme_constant_override("separation", 8)
 	page.add_child(colors)
@@ -445,7 +448,7 @@ func _build_message_page() -> Control:
 		swatch.set_pressed_no_signal(hex == MESSAGE_COLORS[0])
 		colors.add_child(swatch)
 		_color_buttons.append(swatch)
-	page.add_child(_label("Durée", 16, COL_DIM))
+	page.add_child(_label(_t("duration"), 16, COL_DIM))
 	var durations := HBoxContainer.new()
 	durations.add_theme_constant_override("separation", 8)
 	page.add_child(durations)
@@ -460,7 +463,7 @@ func _build_message_page() -> Control:
 	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	page.add_child(spacer)
 	var send := Button.new()
-	send.text = "ENVOYER LE MESSAGE"
+	send.text = _t("send")
 	send.custom_minimum_size = Vector2(280.0, 52.0)
 	send.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	send.focus_mode = Control.FOCUS_NONE
@@ -482,10 +485,10 @@ func _build_activity_page() -> Control:
 	_ducks_button = Button.new()
 	_ducks_button.custom_minimum_size = Vector2(300.0, 46.0)
 	_ducks_button.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
-	_style_card(_ducks_button, GROUPS["Canards"])
+	_style_card(_ducks_button, GROUPS["ducks"])
 	_ducks_button.pressed.connect(func() -> void: mod.actions.clear_ducks())
 	page.add_child(_ducks_button)
-	page.add_child(_label("DERNIERS ÉVÉNEMENTS", 15, COL_DIM))
+	page.add_child(_label(_t("latest"), 15, COL_DIM))
 	var scroll := ScrollContainer.new()
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
@@ -500,16 +503,14 @@ func _build_activity_page() -> Control:
 func _build_settings_page() -> Control:
 	var page := VBoxContainer.new()
 	page.add_theme_constant_override("separation", 16)
-	_paused_toggle = _setting_row(page, "Mettre les viewers en pause",
-			"Les événements du stream sont ignorés. Ce menu continue de fonctionner.")
-	_safe_toggle = _setting_row(page, "Mode safe",
-			"Coupe les effets sur le joueur et la caméra, pour les longues sessions.")
+	_paused_toggle = _setting_row(page, _t("pause_title"), _t("pause_detail"))
+	_safe_toggle = _setting_row(page, _t("safe_title"), _t("safe_detail"))
 	_build_bits_row(page)
-	page.add_child(_label("Ces réglages durent jusqu'au redémarrage du bridge.", 15, COL_DIM))
+	page.add_child(_label(_t("session_note"), 15, COL_DIM))
 	var spacer := Control.new()
 	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	page.add_child(spacer)
-	page.add_child(_label("Talky Needle v%s. Mod non officiel, sans lien avec le développeur du jeu." % mod.VERSION, 14, COL_DIM))
+	page.add_child(_label(_t("about") % mod.VERSION, 14, COL_DIM))
 	return page
 
 
@@ -523,8 +524,8 @@ func _build_bits_row(page: Control) -> void:
 	var texts := VBoxContainer.new()
 	texts.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	row.add_child(texts)
-	texts.add_child(_label("Multiplicateur de bits", 20, COL_TEXT))
-	texts.add_child(_label("Brins de foin ajoutés par bit : à x10, 500 bits ajoutent 5000 brins, 5000 au plus.", 15, COL_DIM))
+	texts.add_child(_label(_t("bits_title"), 20, COL_TEXT))
+	texts.add_child(_label(_t("bits_detail"), 15, COL_DIM))
 	var group := ButtonGroup.new()
 	for value: float in BITS_MULTIPLIERS:
 		var choice := _choice_button("x%d" % int(value), group, COL_FIELD)
@@ -567,6 +568,16 @@ func _setting_row(page: Control, title: String, detail: String) -> Button:
 
 
 # ---------------------------------------------------------------- small pieces
+func _stop_game_translation(node: Node) -> void:
+	node.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	for child in node.get_children():
+		_stop_game_translation(child)
+
+
+func _t(key: String) -> String:
+	return mod.i18n.t(key)
+
+
 func _label(text: String, size_px: int, color: Color) -> Label:
 	var label := Label.new()
 	label.text = text

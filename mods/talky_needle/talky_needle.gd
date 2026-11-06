@@ -6,7 +6,7 @@
 # Protocol: one JSON object per line over TCP, on 127.0.0.1 only.
 extends Node
 
-const VERSION := "0.1.0"
+const VERSION := "0.2.0"
 const PROTOCOL := 1
 const BRIDGE_HOST := "127.0.0.1"
 const BRIDGE_PORT := 7422
@@ -23,6 +23,7 @@ const DEV_AUTOLOAD_FILE := "user://talky_needle_autoload.txt"
 const GAME_SIGNALS := {"needle_found": 2, "needle_discovered": 2, "pile_replaced": 0}
 
 var actions: RefCounted = null
+var i18n: RefCounted = null
 var menu: Node = null
 
 # What the menu (tn_menu.gd) reads.
@@ -54,6 +55,7 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	process_priority = 1000  # after the game's own updates: the camera effects stay on top
 	_base_dir = get_script().resource_path.get_base_dir()
+	i18n = (load(_base_dir + "/tn_i18n.gd") as Script).new()
 	var actions_script: Script = load(_base_dir + "/tn_actions.gd")
 	if actions_script == null or not actions_script.can_instantiate():
 		push_error("[TalkyNeedle] tn_actions.gd failed to compile")
@@ -246,7 +248,7 @@ func _track_world() -> void:
 		_send_state()
 		if not _announced:
 			_announced = true
-			actions.run("notify", {"text": "Talky Needle : mod non officiel actif"}, {})
+			actions.run("notify", {"text": i18n.t("active")}, {})
 
 
 # ---------------------------------------------------------------- game events

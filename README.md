@@ -1,119 +1,119 @@
-# Talky Needle : les événements live de LibertyTalk dans Find The Needle
+# Talky Needle: LibertyTalk live events in Find The Needle
 
-**Mod non officiel**, sans lien avec le développeur du jeu, utilisé à vos risques. Il nécessite le jeu complet et reste gratuit, comme le demande la licence du jeu (`NOTICE.txt`).
+[Version française](README.fr.md)
 
-**État : version 0.1, en test.** Le mod se charge et se connecte au jeu complet. Les actions restent à valider une par une dans une partie.
+**Unofficial mod**, not affiliated with the game's developer, used at your own risk. It requires the full game and stays free, as the game's licence asks (`NOTICE.txt`).
 
-Talky Needle reprend l'idée de [Talky](../Talky) : un follow, des bits ou un raid lancent un workflow dans la partie, et le jeu renvoie ses événements (« aiguille trouvée »).
+**Status: version 0.2, tested in single player on Find The Needle EA V12.** The menu follows the game's language (French or English). Example workflows are in French when Windows is French on the bridge's first start, in English otherwise.
+
+Talky Needle follows the idea of [Talky for Project Zomboid](https://github.com/Tech-Liberty/talky-project-zomboid): a follow, bits or a raid run a workflow in your game, and the game sends its own events back ("needle found").
 
 ```
-LibertyTalk ─HTTPS→ tunnel → bridge.js (workflows) ⇄ TCP local ⇄ mod GDScript dans le jeu
+LibertyTalk -HTTPS-> tunnel -> bridge.js (workflows) <-local TCP-> GDScript mod in the game
 ```
 
-## Comment le mod s'accroche au jeu
+Full guide: [liberty-talk.com/guides/find-the-needle-talky](https://liberty-talk.com/guides/find-the-needle-talky)
 
-Le jeu tourne sous Godot 4.7. Comme les autres mods Nexus, Talky Needle n'utilise aucun loader : une ligne `[autoload]` dans `override.cfg` charge un script depuis `mods/`, à côté de l'exécutable. **Le `.pck` du jeu reste intact : le mod ne le lit pas, ne le déchiffre pas et ne le décompile pas.**
+## How the mod hooks into the game
 
-Les points d'accroche (`GameState`, `hud.show_toast`, `live.spawn`...) viennent du [mod coop open source d'AleDev11](https://github.com/AleDev11/FindTheNeedle-Coop-Mod), écrit pour une ancienne version de la démo. Ils ont pu changer : à chaque chargement d'une partie, le bridge indique ceux qui manquent.
+The game runs on Godot 4.7. Like the other mods on Nexus, Talky Needle uses no loader: an `[autoload]` line in `override.cfg` loads a script from `mods/`, next to the executable. **The game's `.pck` is left alone: the mod does not read, decrypt or decompile it.**
 
-## Installation
+The hooks (`GameState`, `hud.show_toast`, `live.spawn`...) come from [AleDev11's open source co-op mod](https://github.com/AleDev11/FindTheNeedle-Coop-Mod), written for an older demo. They can change: each time a game loads, the bridge reports the missing ones.
 
-1. Lancez `start-bridge.cmd`. Au premier lancement, le jeton est copié dans le presse-papiers sans jamais s'afficher.
-2. Sauvegardez vos parties, fermez le jeu, puis lancez :
+## Install
+
+1. Run `start-bridge.cmd`. On first start, the token goes to the clipboard and is never shown.
+2. Back up your saves, close the game, then run:
    ```powershell
    powershell -ExecutionPolicy Bypass -File tools\install.ps1
    ```
-3. Chargez une partie. Le bandeau « mod non officiel actif » s'affiche et le bridge écrit `game connected`.
-4. Testez sans LibertyTalk :
+3. Load a game. The "unofficial mod active" banner appears and the bridge prints `game connected`.
+4. Press **F8**, or test without LibertyTalk:
    ```powershell
    cd bridge
    node bridge.js fire new_follower user=Bob
    ```
 
-Pour désinstaller : `tools\install.ps1 -Uninstall`. Une mise à jour du jeu peut remplacer `override.cfg` : relancez alors l'installation.
+To uninstall: `tools\install.ps1 -Uninstall`. A game update can replace `override.cfg`: run the install again.
 
-**À savoir avant d'installer :**
+**Before you install:**
 
-- Le jeu détecte les mods au lancement et écrit dans son log que la partie sort des classements (`this game is off the boards`). Cette exclusion pourrait durer après la désinstallation.
-- Le foin ajouté et les effets peuvent changer l'état de la partie. Testez sur une partie à part.
+- The game detects mods at startup and takes the run off the leaderboards (`this game is off the boards`). This may last after you uninstall.
+- Added hay and effects can change the state of the game. Test on a separate game.
 
-## Brancher LibertyTalk
+## Connect LibertyTalk
 
-Le bridge reprend le contrat de Talky : `POST /hooks/<id>` avec l'en-tête `X-Bridge-Token`, et les mêmes identifiants (`follow`, `sub`, `gift`, `bits`, `raid`, `points`, `command`, `donation`, `superchat`, `member`).
+The bridge follows Talky's contract: `POST /hooks/<id>` with the `X-Bridge-Token` header, and the same ids (`follow`, `sub`, `gift`, `bits`, `raid`, `points`, `command`, `donation`, `superchat`, `member`).
 
-1. Exposez le bridge : `cloudflared tunnel --url http://127.0.0.1:7421`.
-2. Dans LibertyTalk, créez des workflows **Appel webhook / API** vers `<adresse du tunnel>/hooks/<id>`. Les champs à envoyer sont dans le README de Talky. Le widget « Project Zomboid · Talky » devrait aussi fonctionner en y collant cette adresse et ce jeton, mais cela reste à vérifier.
+1. Expose the bridge: `cloudflared tunnel --url http://127.0.0.1:7421`.
+2. In LibertyTalk, install the widget (see the guide), or create **Webhook / API call** workflows to `<tunnel address>/hooks/<id>`.
 
-## Actions en jeu
+## The in-game window (F8)
 
-| Action | Paramètres | Effet |
-|---|---|---|
-| `notify` | `text`, `seconds`, `color` | Message à l'écran. Sans `color`, utilise le bandeau du jeu |
-| `message` | `text` (200 caractères), `author`, `seconds`, `color` | Panneau de message. Les messages passent l'un après l'autre (20 en attente au plus) |
-| `wait` | `seconds` | Pause dans le job (s'arrête quand le jeu est en pause) |
-| `hay_rain` | `count` (100 000 max), `on` (`pile` ou `player`), `radius`, `height` | Du foin tombe sur le tas, ou autour du joueur. 300 brins tombent au plus : sur le tas, le reste s'ajoute directement au tas et au compteur |
-| `gust` | `strength`, `radius` | Coup de vent sur le foin libre proche |
-| `magnet` / `levitate` | `seconds` (30 max), `radius`, `speed` | Le foin libre fonce sur le joueur ou s'envole |
-| `duck` | `name`, `size` (8 max), `count` (30 max), `seconds`, `on` | Canard en plastique au nom du viewer. 40 en même temps au plus |
-| `clear_ducks` | | Supprime tous les canards. Aussi avec `F9`, ou le bouton affiché en haut à droite quand le curseur est libre (menu pause) |
-| `yeet` | `force` (30 max) | Envoie le joueur en l'air |
-| `spin` | `turns`, `seconds` | Fait tourner la vue du joueur |
-| `drunk` / `upside_down` / `quake_pro` | `seconds` (30 max) | Caméra ivre, écran à l'envers, champ de vision extrême |
-| `blackout` | `seconds` (10 max), `text` | Écran noir avec un texte |
-| `sound` | `name` (`fart`, `quack`, `beep`), `pitch`, `volume` | Son synthétisé par le mod |
+`F8` opens the menu, `F8` or `Esc` closes it, in a loaded game.
 
-Les aiguilles ne sont jamais déplacées. Les workflows se règlent dans `bridge\config.json`, avec la même syntaxe que Talky (`when`, `if`, `random`, `repeat`, filtres `{{bits | div:100 | floor}}`). Les récompenses de points sont routées d'après leur titre : `foin`, `canard`, `prout`, `aiguille` (fausse alerte du détecteur), `éjecte`, `aimant`, `lévitation`, `bourré`, `envers`, `zoom`, `toupie`, `panne` ou `vent`.
+- **Effects**: runs the workflows that have a `menu` entry in `bridge\config.json` (`label`, `group` and `payload` for test values). The chosen name replaces the viewer's.
+- **Message**: writes a message on screen, with its colour and duration.
+- **Activity**: the latest events that ran, and removing the ducks.
+- **Settings**: pausing viewer events, safe mode and the bits multiplier, until the bridge restarts.
 
-## La fenêtre en jeu (F8)
+The window shows no token and no address: it can stay on screen while you stream.
 
-`F8` ouvre le menu, `F8` ou `Échap` le ferme, dans une partie chargée.
-
-- **Effets** : déclenche les workflows qui ont une entrée `menu` dans `bridgeconfig.json` (`label`, `group`, et `payload` pour les valeurs de test). Le pseudo choisi remplace celui du viewer.
-- **Message** : écrit un message à l'écran, avec sa couleur et sa durée.
-- **Activité** : les derniers événements exécutés, et la suppression des canards.
-- **Réglages** : pause des événements viewers et mode safe, jusqu'au redémarrage du bridge.
-
-La fenêtre n'affiche ni jeton ni adresse : elle peut rester à l'écran pendant un stream.
-
-## Afficher un message
+## Show a message
 
 ```powershell
-node bridgeridge.js fire message "text=Bonjour le chat" user=Bob
+node bridge\bridge.js fire message "text=Hello chat" user=Bob
 ```
 
-Depuis LibertyTalk : `POST /hooks/message` avec `user_name` et `text` (ou `message`). Le texte s'affiche tel quel à l'écran, donc sur le stream : ne branchez dessus que du texte que vous contrôlez ou qui est modéré.
+From LibertyTalk: `POST /hooks/message` with `user_name` and `text` (or `message`). The text is displayed as is, on your stream: only connect text you control or that is moderated.
 
-## Multiplicateur de bits
+## In-game actions
 
-`bitsMultiplier` dans `settings` de `bridgeconfig.json` (10 par défaut) multiplie les bits : à ×10, 500 bits ajoutent 5000 brins. Les boutons de F8 > Réglages le changent jusqu'au redémarrage du bridge. Les workflows lisent le résultat dans `{{bitsMultiplied}}`, plafonné à 5000 dans le workflow `bits`.
+| Action | Parameters | Effect |
+|---|---|---|
+| `notify` | `text`, `seconds`, `color` | On-screen banner. Without `color`, uses the game's banner |
+| `message` | `text` (200 characters), `author`, `seconds`, `color` | Message panel. Messages show one after the other (20 waiting at most) |
+| `wait` | `seconds` | Pause in the job (stops while the game is paused) |
+| `hay_rain` | `count` (100,000 max), `on` (`pile` or `player`), `radius`, `height` | Hay falls on the pile or around the player. At most 300 straws fall: on the pile, the rest goes straight to the pile and the counter |
+| `gust` | `strength`, `radius` | A gust on nearby loose hay |
+| `magnet` / `levitate` | `seconds` (30 max), `radius`, `speed` | Loose hay rushes at the player, or floats up |
+| `duck` | `name`, `size` (8 max), `count` (30 max), `seconds`, `on` | Rubber duck named after the viewer. 40 at the same time at most |
+| `clear_ducks` | | Removes all ducks. Also with `F9`, or the button at the top right when the cursor is free (pause menu) |
+| `yeet` | `force` (30 max) | Throws the player into the air |
+| `spin` | `turns`, `seconds` | Spins the player's view |
+| `drunk` / `upside_down` / `quake_pro` | `seconds` (30 max) | Drunk camera, upside-down screen, extreme field of view |
+| `blackout` | `seconds` (10 max), `text` | Black screen with a text |
+| `sound` | `name` (`fart`, `quack`, `beep`), `pitch`, `volume` | Sound synthesised by the mod |
 
-## Limiter les abus
+Needles never move. Workflows live in `bridge\config.json`, with Talky's syntax (`when`, `if`, `random`, `repeat`, filters such as `{{bits | div:100 | floor}}`). Channel point rewards are routed by their title: `hay`, `duck`, `fart`, `needle` (fake detector alert), `launch`, `magnet`, `levitat`, `drunk`, `upside`, `zoom`, `spin`, `blackout` or `wind`. On a French system, the words are French: see `README.fr.md`.
 
-Dans `settings` de `bridge\config.json` :
+## Bits multiplier
 
-- `maxJobsPerMinute` : plafond des événements viewers par minute ;
-- `blockedActions` : actions toujours désactivées ;
-- `safeMode` : coupe `safeModeBlocks` (les effets sur le joueur et la caméra par défaut), pour les longues sessions.
+`bitsMultiplier` in `settings` of `bridge\config.json` (10 by default) multiplies bits: at x10, 500 bits add 5000 straws. The buttons in F8 > Settings change it until the bridge restarts. Workflows read the result in `{{bitsMultiplied}}`, capped at 5000 in the `bits` workflow.
 
-Chaque workflow accepte aussi `cooldownSeconds`, `userCooldownSeconds` et `chance`. Un job qui attend plus de `jobTtlSeconds` est abandonné : une partie lancée en retard ne reçoit pas 40 livraisons d'un coup.
+## Limit abuse
 
-## Événements du jeu
+In `settings` of `bridge\config.json`:
 
-`gameEvents` associe un événement à des workflows : `needle_found`, `needle_discovered`, `pile_replaced`. Pour prévenir LibertyTalk quand une aiguille est trouvée, remplissez la cible `lt_report` de `httpTargets` et activez le workflow `report_to_libertytalk`.
+- `maxJobsPerMinute`: ceiling on viewer events per minute;
+- `blockedActions`: actions that are always off;
+- `safeMode`: cuts `safeModeBlocks` (the effects on the player and the camera by default), for long sessions.
 
-## Pas encore fait
+Each workflow also accepts `cooldownSeconds`, `userCooldownSeconds` and `chance`. A job waiting longer than `jobTtlSeconds` is dropped: a game started late does not receive 40 deliveries at once.
 
-Vraie aiguille-leurre pour le détecteur, drones au nom des abonnés, vraie panne des machines, votes sur l'arbre techno, paris sur la grille, overlay. Ces idées demandent d'abord de voir comment le jeu complet se comporte.
+## Game events
 
-## Développement
+`gameEvents` links an event to workflows: `needle_found`, `needle_discovered`, `pile_replaced`. To tell LibertyTalk when a needle is found, fill in the `lt_report` target of `httpTargets` and enable the `report_to_libertytalk` workflow.
+
+## Development
 
 ```powershell
 cd bridge
 node --test test/
 ```
 
-Pour retoucher la fenêtre sans relancer le jeu : copiez `tn_menu.gd` dans le dossier du jeu, puis `fire dev_reload`. `fire dev_shot` enregistre une capture de ce que montre le jeu dans `talky_needle_shot.png`, dans ses données utilisateur.
+To adjust the window without restarting the game: copy `tn_menu.gd` into the game folder, then `fire dev_reload`. `fire dev_shot` saves a capture of what the game shows to `talky_needle_shot.png`, in its user data.
 
 ## Licence
 
-MIT. `bridge/lib/engine.js` et `bridge/lib/hosts.js` viennent de Talky. Le contenu du jeu n'est pas inclus.
+MIT. `bridge/lib/engine.js`, `bridge/lib/hosts.js` and `bridge/lib/examples.js` come from Talky. No game content is included.
