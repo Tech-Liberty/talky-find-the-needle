@@ -6,7 +6,7 @@
 # Protocol: one JSON object per line over TCP, on 127.0.0.1 only.
 extends Node
 
-const VERSION := "0.2.0"
+const VERSION := "0.2.1"
 const PROTOCOL := 1
 const BRIDGE_HOST := "127.0.0.1"
 const BRIDGE_PORT := 7422
@@ -37,6 +37,7 @@ var activity_version := 0
 
 var _enabled := false
 var _base_dir := ""
+var _language := ""
 var _game_font: Font = null
 var _peer := StreamPeerTCP.new()
 var _buffer := PackedByteArray()
@@ -292,7 +293,8 @@ func _send_event(event: String, data: Dictionary) -> void:
 
 func _send_state() -> void:
 	var gs := game_state()
-	var state := {"t": "state", "inWorld": world() != null}
+	var state := {"t": "state", "inWorld": world() != null, "language": i18n.language()}
+	_follow_game_language()
 	if gs != null:
 		state["money"] = gs.get("money")
 		state["needlesFound"] = gs.get("needles_found")
@@ -301,6 +303,20 @@ func _send_state() -> void:
 
 
 # Which hooks of the game this version offers, for the bridge's window.
+# The player changed the game's language: the window follows, and the state tells the bridge.
+func _follow_game_language() -> void:
+	var current: String = i18n.language()
+	if current == _language:
+		return
+	var first_time := _language == ""
+	_language = current
+	if not first_time and menu != null and is_instance_valid(menu):
+		var was_open: bool = menu.is_open
+		reload_menu()
+		if was_open:
+			menu.open()
+
+
 func _send_compat() -> void:
 	_send({"t": "compat", "hooks": actions.compat()})
 
@@ -323,7 +339,7 @@ func _poll_link(delta: float) -> void:
 		StreamPeerTCP.STATUS_CONNECTED:
 			if not _hello_sent:
 				_hello_sent = true
-				_send({"t": "hello", "protocol": PROTOCOL, "version": VERSION})
+				_send({"t": "hello", "protocol": PROTOCOL, "version": VERSION, "language": i18n.language()})
 				_send_state()
 				if world() != null:
 					_send_compat()

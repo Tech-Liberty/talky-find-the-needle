@@ -286,6 +286,30 @@ test('every example text has its French version, and French rewards are routed',
   const game = await connectGame();
   await post('/hooks/points', { user_name: 'A', reward_title: 'Coup de VENT' });
   assert.strictEqual((await game.nextJob()).workflow, 'points_gust');
+  await post('/hooks/points', { user_name: 'A', reward_title: 'Hay delivery' });
+  assert.strictEqual((await game.nextJob(1)).workflow, 'points_hay');
+  const none = await (await post('/hooks/points', { user_name: 'A', reward_title: 'Live event' })).json();
+  assert.deepStrictEqual(none.results, []);
+});
+
+test('example texts follow the language of the game, and edited texts stay', async (t) => {
+  const { bridge, post, connectGame } = await setup(t);
+  assert.strictEqual(bridge.cfg.settings.language, 'auto');
+  bridge.cfg.workflows.donation.steps[0].text = 'Custom thanks {{user}}';
+  const game = await connectGame();
+  game.send({ t: 'hello', protocol: 1, version: 'test', language: 'fr' });
+  await settle();
+  const label = (id) => game.catalogs.at(-1).workflows.find((w) => w.id === id).label;
+  assert.strictEqual(label('points_duck'), 'Canard');
+  await post('/hooks/follow', { user_name: 'Bob' });
+  assert.match((await game.nextJob(0)).steps[0].text, /débarque/);
+  await post('/hooks/donation', { user_name: 'Bob' });
+  assert.match((await game.nextJob(1)).steps[0].text, /Custom thanks/);
+  game.send({ t: 'state', inWorld: true, language: 'en' });
+  await settle();
+  assert.strictEqual(label('points_duck'), 'Duck');
+  await post('/hooks/raid', { user_name: 'Bob', viewers: '5' });
+  assert.match((await game.nextJob(2)).steps[0].text, /HAY RAID/);
 });
 
 test('the example config only uses actions the mod has', () => {

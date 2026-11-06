@@ -15,7 +15,7 @@
     }
   },
   "settings": {
-    "language": "en",
+    "language": "auto",
     "anonymousName": "Anonymous",
     "maxJobsPerMinute": 30,
     "bitsMultiplier": 10,
@@ -66,7 +66,7 @@
         {
           "when": {
             "reward_title": {
-              "contains": "hay"
+              "matches": "foin|\\bhay\\b"
             }
           },
           "workflow": "points_hay"
@@ -74,7 +74,7 @@
         {
           "when": {
             "reward_title": {
-              "contains": "duck"
+              "matches": "canard|duck"
             }
           },
           "workflow": "points_duck"
@@ -82,7 +82,7 @@
         {
           "when": {
             "reward_title": {
-              "contains": "fart"
+              "matches": "prout|fart"
             }
           },
           "workflow": "points_fart"
@@ -90,7 +90,7 @@
         {
           "when": {
             "reward_title": {
-              "contains": "needle"
+              "matches": "aiguille|needle"
             }
           },
           "workflow": "points_fake_needle"
@@ -98,7 +98,7 @@
         {
           "when": {
             "reward_title": {
-              "contains": "launch"
+              "matches": "éjecte|launch"
             }
           },
           "workflow": "points_yeet"
@@ -106,7 +106,7 @@
         {
           "when": {
             "reward_title": {
-              "contains": "magnet"
+              "matches": "aimant|magnet"
             }
           },
           "workflow": "points_magnet"
@@ -114,7 +114,7 @@
         {
           "when": {
             "reward_title": {
-              "contains": "levitat"
+              "matches": "lévitation|levitat"
             }
           },
           "workflow": "points_levitate"
@@ -122,7 +122,7 @@
         {
           "when": {
             "reward_title": {
-              "contains": "drunk"
+              "matches": "bourré|drunk"
             }
           },
           "workflow": "points_drunk"
@@ -130,7 +130,7 @@
         {
           "when": {
             "reward_title": {
-              "contains": "upside"
+              "matches": "envers|upside"
             }
           },
           "workflow": "points_upside_down"
@@ -138,7 +138,7 @@
         {
           "when": {
             "reward_title": {
-              "contains": "zoom"
+              "matches": "zoom"
             }
           },
           "workflow": "points_quake_pro"
@@ -146,7 +146,7 @@
         {
           "when": {
             "reward_title": {
-              "contains": "spin"
+              "matches": "toupie|spin"
             }
           },
           "workflow": "points_spin"
@@ -154,7 +154,7 @@
         {
           "when": {
             "reward_title": {
-              "contains": "blackout"
+              "matches": "panne|blackout"
             }
           },
           "workflow": "points_blackout"
@@ -162,7 +162,7 @@
         {
           "when": {
             "reward_title": {
-              "contains": "wind"
+              "matches": "\\bvent\\b|\\bwind\\b"
             }
           },
           "workflow": "points_gust"

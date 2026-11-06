@@ -4,7 +4,7 @@
 
 **Mod non officiel**, sans lien avec le développeur du jeu, utilisé à vos risques. Il nécessite le jeu complet et reste gratuit, comme le demande la licence du jeu (`NOTICE.txt`).
 
-**État : version 0.2, testée en solo sur Find The Needle EA V12.** Le menu suit la langue du jeu (français ou anglais). Les workflows d'exemple sont en français si Windows l'est au premier lancement du bridge.
+**État : version 0.2, testée en solo sur Find The Needle EA V12.** Le menu et les workflows d'exemple suivent la langue du jeu (français ou anglais), même si vous la changez en cours de partie.
 
 Talky Needle reprend l'idée de [Talky](../Talky) : un follow, des bits ou un raid lancent un workflow dans la partie, et le jeu renvoie ses événements (« aiguille trouvée »).
 
@@ -64,7 +64,7 @@ Le bridge reprend le contrat de Talky : `POST /hooks/<id>` avec l'en-tête `X-Br
 | `blackout` | `seconds` (10 max), `text` | Écran noir avec un texte |
 | `sound` | `name` (`fart`, `quack`, `beep`), `pitch`, `volume` | Son synthétisé par le mod |
 
-Les aiguilles ne sont jamais déplacées. Les workflows se règlent dans `bridge\config.json`, avec la même syntaxe que Talky (`when`, `if`, `random`, `repeat`, filtres `{{bits | div:100 | floor}}`). Les récompenses de points sont routées d'après leur titre : `foin`, `canard`, `prout`, `aiguille` (fausse alerte du détecteur), `éjecte`, `aimant`, `lévitation`, `bourré`, `envers`, `zoom`, `toupie`, `panne` ou `vent`.
+Les aiguilles ne sont jamais déplacées. Les workflows se règlent dans `bridge\config.json`, avec la même syntaxe que Talky (`when`, `if`, `random`, `repeat`, filtres `{{bits | div:100 | floor}}`). Les récompenses de points sont routées d'après leur titre, en français ou en anglais : `foin`, `canard`, `prout`, `aiguille` (fausse alerte du détecteur), `éjecte`, `aimant`, `lévitation`, `bourré`, `envers`, `zoom`, `toupie`, `panne` ou `vent`. `settings.language` (`auto` par défaut) suit le jeu ; un texte que vous avez modifié ne change jamais.
 
 ## La fenêtre en jeu (F8)
 

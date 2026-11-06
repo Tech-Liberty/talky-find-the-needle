@@ -4,58 +4,6 @@
     "en": "Anonymous",
     "fr": "Anonyme"
   },
-  "webhooks.points.routes.0.when.reward_title.contains": {
-    "en": "hay",
-    "fr": "foin"
-  },
-  "webhooks.points.routes.1.when.reward_title.contains": {
-    "en": "duck",
-    "fr": "canard"
-  },
-  "webhooks.points.routes.2.when.reward_title.contains": {
-    "en": "fart",
-    "fr": "prout"
-  },
-  "webhooks.points.routes.3.when.reward_title.contains": {
-    "en": "needle",
-    "fr": "aiguille"
-  },
-  "webhooks.points.routes.4.when.reward_title.contains": {
-    "en": "launch",
-    "fr": "éjecte"
-  },
-  "webhooks.points.routes.5.when.reward_title.contains": {
-    "en": "magnet",
-    "fr": "aimant"
-  },
-  "webhooks.points.routes.6.when.reward_title.contains": {
-    "en": "levitat",
-    "fr": "lévitation"
-  },
-  "webhooks.points.routes.7.when.reward_title.contains": {
-    "en": "drunk",
-    "fr": "bourré"
-  },
-  "webhooks.points.routes.8.when.reward_title.contains": {
-    "en": "upside",
-    "fr": "envers"
-  },
-  "webhooks.points.routes.9.when.reward_title.contains": {
-    "en": "zoom",
-    "fr": "zoom"
-  },
-  "webhooks.points.routes.10.when.reward_title.contains": {
-    "en": "spin",
-    "fr": "toupie"
-  },
-  "webhooks.points.routes.11.when.reward_title.contains": {
-    "en": "blackout",
-    "fr": "panne"
-  },
-  "webhooks.points.routes.12.when.reward_title.contains": {
-    "en": "wind",
-    "fr": "vent"
-  },
   "workflows.new_follower.steps.0.text": {
     "en": "{{user}} lands on the pile!",
     "fr": "{{user}} débarque sur le tas !"

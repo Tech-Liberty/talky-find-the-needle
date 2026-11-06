@@ -4,7 +4,7 @@
 
 **Unofficial mod**, not affiliated with the game's developer, used at your own risk. It requires the full game and stays free, as the game's licence asks (`NOTICE.txt`).
 
-**Status: version 0.2, tested in single player on Find The Needle EA V12.** The menu follows the game's language (French or English). Example workflows are in French when Windows is French on the bridge's first start, in English otherwise.
+**Status: version 0.2, tested in single player on Find The Needle EA V12.** The menu and the example workflows follow the game's language (French or English), even when you change it during a game.
 
 Talky Needle follows the idea of [Talky for Project Zomboid](https://github.com/Tech-Liberty/talky-project-zomboid): a follow, bits or a raid run a workflow in your game, and the game sends its own events back ("needle found").
 
@@ -85,7 +85,7 @@ From LibertyTalk: `POST /hooks/message` with `user_name` and `text` (or `message
 | `blackout` | `seconds` (10 max), `text` | Black screen with a text |
 | `sound` | `name` (`fart`, `quack`, `beep`), `pitch`, `volume` | Sound synthesised by the mod |
 
-Needles never move. Workflows live in `bridge\config.json`, with Talky's syntax (`when`, `if`, `random`, `repeat`, filters such as `{{bits | div:100 | floor}}`). Channel point rewards are routed by their title: `hay`, `duck`, `fart`, `needle` (fake detector alert), `launch`, `magnet`, `levitat`, `drunk`, `upside`, `zoom`, `spin`, `blackout` or `wind`. On a French system, the words are French: see `README.fr.md`.
+Needles never move. Workflows live in `bridge\config.json`, with Talky's syntax (`when`, `if`, `random`, `repeat`, filters such as `{{bits | div:100 | floor}}`). Channel point rewards are routed by their title, in French or English: `hay`, `duck`, `fart`, `needle` (fake detector alert), `launch`, `magnet`, `levitat`, `drunk`, `upside`, `zoom`, `spin`, `blackout` or `wind`. `settings.language` (`auto` by default) follows the game; a text you edited yourself never changes.
 
 ## Bits multiplier
 

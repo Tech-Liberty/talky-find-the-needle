@@ -43,8 +43,8 @@ const blocks = [
     "Talky Needle est un mod non officiel, sans lien avec le développeur de Find The Needle, et vous l'utilisez à vos risques. Il demande le jeu complet. Le jeu détecte les mods au lancement et sort la partie des classements en ligne. Cette exclusion peut durer après la désinstallation. Le mod ne lit ni ne modifie le fichier `.pck` du jeu.",
     'Talky Needle is an unofficial mod, not affiliated with the developer of Find The Needle, and you use it at your own risk. It requires the full game. The game detects mods at startup and takes the run off the online leaderboards. This exclusion may last after you uninstall. The mod neither reads nor changes the game\'s `.pck` file.'),
   callout('intro-tested', 'info', 'Version testée', 'Tested version',
-    "Talky Needle 0.2.0 a été lancé sur Find The Needle EA V12, en solo et sur Windows 11. Une mise à jour du jeu peut déplacer ce que le mod utilise : le pont écrit alors `warning: hooks missing` au chargement d'une partie.",
-    'Talky Needle 0.2.0 was run on Find The Needle EA V12, in single player, on Windows 11. A game update can move what the mod relies on: the bridge then prints `warning: hooks missing` when a game loads.'),
+    "Talky Needle 0.2.1 a été lancé sur Find The Needle EA V12, en solo et sur Windows 11. Une mise à jour du jeu peut déplacer ce que le mod utilise : le pont écrit alors `warning: hooks missing` au chargement d'une partie.",
+    'Talky Needle 0.2.1 was run on Find The Needle EA V12, in single player, on Windows 11. A game update can move what the mod relies on: the bridge then prints `warning: hooks missing` when a game loads.'),
 
   part('part-1-enable', 'Activer Talky Needle dans le jeu', 'Turn on Talky Needle in the game',
     'Installer le mod et le pont, tester depuis le menu F8, ouvrir le tunnel, puis relier LibertyTalk.',
@@ -66,7 +66,7 @@ const blocks = [
   {
     id: 'p1-get-links', type: 'links',
     items: [
-      { label: L('Télécharger Talky Needle', 'Download Talky Needle'), url: DOWNLOAD_URL, kind: 'github', description: L('Le fichier `TalkyNeedle-0.2.0.zip`, avec le mod, le pont et les scripts.', 'The `TalkyNeedle-0.2.0.zip` file, with the mod, the bridge and the scripts.') },
+      { label: L('Télécharger Talky Needle', 'Download Talky Needle'), url: DOWNLOAD_URL, kind: 'github', description: L('Le fichier `TalkyNeedle-0.2.1.zip`, avec le mod, le pont et les scripts.', 'The `TalkyNeedle-0.2.1.zip` file, with the mod, the bridge and the scripts.') },
       { label: L('Node.js', 'Node.js'), url: 'https://nodejs.org', kind: 'external' },
       { label: L('cloudflared', 'cloudflared'), url: 'https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/', kind: 'external' },
     ],
@@ -95,7 +95,7 @@ const blocks = [
   p('p1-bridge-text',
     "Double-cliquez sur `start-bridge.cmd` et laissez la fenêtre ouverte pendant que vous jouez. Le pont ne reçoit des appels que sur votre PC, à l'adresse `http://127.0.0.1:7421`. Au premier lancement, il crée `bridge\\config.json` avec un jeton aléatoire et copie ce jeton dans le presse-papiers sans jamais l'afficher, pour qu'il reste hors du stream.",
     'Double-click `start-bridge.cmd` and leave the window open while you play. The bridge only receives calls on your PC, at `http://127.0.0.1:7421`. On first start, it creates `bridge\\config.json` with a random token and copies the token to the clipboard without ever showing it, so it stays off your stream.'),
-  code('p1-bridge-code', 'text', 'created config.json with a random token, copied to your clipboard; never shown here\nTalky Needle bridge 0.2.0 (unofficial): webhooks on http://127.0.0.1:7421, game link on port 7422\n10 webhook(s), 24 workflow(s), waiting for the game...',
+  code('p1-bridge-code', 'text', 'created config.json with a random token, copied to your clipboard; never shown here\nTalky Needle bridge 0.2.1 (unofficial): webhooks on http://127.0.0.1:7421, game link on port 7422\n10 webhook(s), 24 workflow(s), waiting for the game...',
     'Ce que le pont affiche au premier lancement, précédé de l\'heure.',
     'What the bridge prints on first start, after the time.'),
 
@@ -157,7 +157,7 @@ const blocks = [
   {
     id: 'p1-trouble-faq', type: 'faq',
     items: [
-      { q: L('Rien ne se passe au lancement du jeu', 'Nothing happens when the game starts'), a: L("Vérifiez que `override.cfg` se trouve à côté de `FindTheNeedle.exe` et contient la ligne `TalkyNeedle`. Lancez à nouveau `tools\\install.ps1` si besoin. Le journal du jeu, `%APPDATA%\\Godot\\app_userdata\\FindTheNeedle\\logs\\godot.log`, doit contenir `[TalkyNeedle] v0.2.0 loaded`.", 'Check that `override.cfg` is next to `FindTheNeedle.exe` and contains the `TalkyNeedle` line. Run `tools\\install.ps1` again if needed. The game log, `%APPDATA%\\Godot\\app_userdata\\FindTheNeedle\\logs\\godot.log`, must contain `[TalkyNeedle] v0.2.0 loaded`.') },
+      { q: L('Rien ne se passe au lancement du jeu', 'Nothing happens when the game starts'), a: L("Vérifiez que `override.cfg` se trouve à côté de `FindTheNeedle.exe` et contient la ligne `TalkyNeedle`. Lancez à nouveau `tools\\install.ps1` si besoin. Le journal du jeu, `%APPDATA%\\Godot\\app_userdata\\FindTheNeedle\\logs\\godot.log`, doit contenir `[TalkyNeedle] v0.2.1 loaded`.", 'Check that `override.cfg` is next to `FindTheNeedle.exe` and contains the `TalkyNeedle` line. Run `tools\\install.ps1` again if needed. The game log, `%APPDATA%\\Godot\\app_userdata\\FindTheNeedle\\logs\\godot.log`, must contain `[TalkyNeedle] v0.2.1 loaded`.') },
       { q: L('Le menu affiche « Bridge non connecté »', 'The menu shows "Bridge not connected"'), a: L('Lancez `start-bridge.cmd` et laissez sa fenêtre ouverte. Le mod se reconnecte seul toutes les deux secondes.', 'Run `start-bridge.cmd` and leave its window open. The mod reconnects by itself every two seconds.') },
       { q: L('Le pont écrit `warning: hooks missing`', 'The bridge prints `warning: hooks missing`'), a: L("Une mise à jour du jeu a déplacé ce que le mod utilise. Les effets concernés ne font plus rien jusqu'à une nouvelle version du mod : les autres continuent de fonctionner.", 'A game update moved what the mod relies on. The affected effects do nothing until a new version of the mod comes out: the others keep working.') },
       { q: L('Le pont écrit `gust failed: nothing_nearby`', 'The bridge prints `gust failed: nothing_nearby`'), a: L("Le vent n'a trouvé aucun foin libre autour de vous, donc rien n'a bougé. Dans vos workflows, placez un `hay_rain` avec `\"on\": \"player\"` juste avant le `gust`.", 'The wind found no loose hay around you, so nothing moved. In your workflows, place a `hay_rain` with `"on": "player"` right before the `gust`.') },
@@ -191,8 +191,8 @@ const blocks = [
 
   h2('p2-points', 'Créer des récompenses de points', 'Create channel points rewards'),
   p('p2-points-text',
-    'Le webhook `points` choisit le workflow selon le titre de la récompense. Les mots dépendent de la langue de Windows au premier lancement du pont, français ici. Créez une récompense Twitch dont le titre contient un des mots ci-dessous : « Coup de vent sur le tas » lance `points_gust`. La casse ne compte pas, et le premier mot trouvé dans la liste de `bridge\\config.json` l\'emporte.',
-    'The `points` webhook picks the workflow from the title of the reward. The words depend on the Windows language when the bridge first starts, English here. Create a Twitch reward whose title contains one of the words below: "Wind on the pile" runs `points_gust`. Case does not matter, and the first word found in the list in `bridge\\config.json` wins.'),
+    'Le webhook `points` choisit le workflow selon le titre de la récompense, en français ou en anglais. Créez une récompense Twitch dont le titre contient un des mots ci-dessous : « Coup de vent sur le tas » lance `points_gust`. La casse ne compte pas, et le premier mot trouvé dans la liste de `bridge\\config.json` l\'emporte.',
+    'The `points` webhook picks the workflow from the title of the reward, in French or English. Create a Twitch reward whose title contains one of the words below: "Wind on the pile" runs `points_gust`. Case does not matter, and the first word found in the list in `bridge\\config.json` wins.'),
   table('p2-points-table', [['Mot dans le titre', 'Word in the title'], ['Effet', 'Effect'], ['Délai', 'Cooldown']], [
     [['`foin`', '`hay`'], ['Livraison de foin sur le tas', 'Hay delivery on the pile'], '30 s'],
     [['`canard`', '`duck`'], ['Un canard au nom du viewer, de taille aléatoire', "A duck named after the viewer, in a random size"], '20 s'],

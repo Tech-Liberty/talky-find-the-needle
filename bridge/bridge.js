@@ -21,7 +21,7 @@ const crypto = require('crypto');
 const { spawnSync } = require('child_process');
 const { expand, test, buildVars, arr, toNum } = require('./lib/engine');
 const { checkHttpUrl } = require('./lib/hosts');
-const { localizeExamples } = require('./lib/examples');
+const { localizeExamples, loadOverlay, resolvePath, SUPPORTED_LANGUAGES } = require('./lib/examples');
 
 const VERSION = require('./package.json').version;
 const PROTOCOL = 1;
@@ -93,6 +93,7 @@ class Bridge {
     this.lastRun = new Map(); // workflow -> time of its last run
     this.lastRunByUser = new Map(); // workflow + user -> time of its last run
     this.recentHookJobs = []; // times of the jobs started by webhooks in the last minute
+    this.language = this.settings.language;
   }
 
   // ---------------------------------------------------------------- start / stop
@@ -153,6 +154,21 @@ class Bridge {
     if (!steps.length) return { ok: true, steps: 0 };
     const seq = this.enqueue({ workflow: name, user: vars.user, steps });
     return { ok: true, seq, steps: steps.length };
+  }
+
+  // settings.language "auto": the example texts follow the game's language. Only a text still
+  // equal to one of its example versions changes, so a text you wrote yourself is never replaced.
+  followGameLanguage(language) {
+    if (this.settings.language !== 'auto' || !SUPPORTED_LANGUAGES.includes(language) || language === this.language) return;
+    this.language = language;
+    const overlay = loadOverlay('fr');
+    if (!overlay) return;
+    for (const [dotPath, texts] of Object.entries(overlay)) {
+      const found = dotPath.startsWith('_') ? null : resolvePath(this.cfg, dotPath);
+      if (found && (found[0][found[1]] === texts.en || found[0][found[1]] === texts.fr)) found[0][found[1]] = texts[language];
+    }
+    this.log(`texts now follow the game: ${language}`);
+    this.sendCatalog();
   }
 
   // Anti-grief: cooldowns of the workflow, and a ceiling on what viewers can start per minute.
@@ -288,6 +304,7 @@ class Bridge {
       case 'hello':
         this.log(`game connected: mod v${msg.version}`);
         if (msg.protocol !== PROTOCOL) this.log(`warning: mod protocol ${msg.protocol}, bridge ${PROTOCOL}: update both`);
+        this.followGameLanguage(msg.language);
         this.sendCatalog();
         break;
       case 'fire':
@@ -302,6 +319,7 @@ class Bridge {
         break;
       case 'state':
         this.gameState = { inWorld: msg.inWorld === true, money: msg.money, needlesFound: msg.needlesFound };
+        this.followGameLanguage(msg.language);
         this.pump();
         break;
       case 'ack':
@@ -429,8 +447,7 @@ function loadConfig() {
     const token = crypto.randomBytes(24).toString('hex');
     const config = JSON.parse(fs.readFileSync(EXAMPLE_PATH, 'utf8'));
     config.token = token;
-    config.settings.language = systemLanguage();
-    localizeExamples(config, config.settings.language);
+    localizeExamples(config, systemLanguage()); // until the game says its language
     fs.writeFileSync(CONFIG_PATH, `${JSON.stringify(config, null, 2)}\n`, { flag: 'wx' });
     const copied = process.platform === 'win32' && spawnSync('clip', { input: token }).status === 0;
     log(`created config.json with a random token, ${copied ? 'copied to your clipboard' : 'see "token" in config.json'}; never shown here`);

@@ -109,8 +109,8 @@
         "en": "Tested version"
       },
       "text": {
-        "fr": "Talky Needle 0.2.0 a été lancé sur Find The Needle EA V12, en solo et sur Windows 11. Une mise à jour du jeu peut déplacer ce que le mod utilise : le pont écrit alors `warning: hooks missing` au chargement d'une partie.",
-        "en": "Talky Needle 0.2.0 was run on Find The Needle EA V12, in single player, on Windows 11. A game update can move what the mod relies on: the bridge then prints `warning: hooks missing` when a game loads."
+        "fr": "Talky Needle 0.2.1 a été lancé sur Find The Needle EA V12, en solo et sur Windows 11. Une mise à jour du jeu peut déplacer ce que le mod utilise : le pont écrit alors `warning: hooks missing` au chargement d'une partie.",
+        "en": "Talky Needle 0.2.1 was run on Find The Needle EA V12, in single player, on Windows 11. A game update can move what the mod relies on: the bridge then prints `warning: hooks missing` when a game loads."
       }
     },
     {
@@ -192,8 +192,8 @@
           "url": "https://github.com/Tech-Liberty/talky-find-the-needle/releases/latest",
           "kind": "github",
           "description": {
-            "fr": "Le fichier `TalkyNeedle-0.2.0.zip`, avec le mod, le pont et les scripts.",
-            "en": "The `TalkyNeedle-0.2.0.zip` file, with the mod, the bridge and the scripts."
+            "fr": "Le fichier `TalkyNeedle-0.2.1.zip`, avec le mod, le pont et les scripts.",
+            "en": "The `TalkyNeedle-0.2.1.zip` file, with the mod, the bridge and the scripts."
           }
         },
         {
@@ -303,7 +303,7 @@
       "id": "p1-bridge-code",
       "type": "code",
       "language": "text",
-      "code": "created config.json with a random token, copied to your clipboard; never shown here\nTalky Needle bridge 0.2.0 (unofficial): webhooks on http://127.0.0.1:7421, game link on port 7422\n10 webhook(s), 24 workflow(s), waiting for the game...",
+      "code": "created config.json with a random token, copied to your clipboard; never shown here\nTalky Needle bridge 0.2.1 (unofficial): webhooks on http://127.0.0.1:7421, game link on port 7422\n10 webhook(s), 24 workflow(s), waiting for the game...",
       "caption": {
         "fr": "Ce que le pont affiche au premier lancement, précédé de l'heure.",
         "en": "What the bridge prints on first start, after the time."
@@ -557,8 +557,8 @@
             "en": "Nothing happens when the game starts"
           },
           "a": {
-            "fr": "Vérifiez que `override.cfg` se trouve à côté de `FindTheNeedle.exe` et contient la ligne `TalkyNeedle`. Lancez à nouveau `tools\\install.ps1` si besoin. Le journal du jeu, `%APPDATA%\\Godot\\app_userdata\\FindTheNeedle\\logs\\godot.log`, doit contenir `[TalkyNeedle] v0.2.0 loaded`.",
-            "en": "Check that `override.cfg` is next to `FindTheNeedle.exe` and contains the `TalkyNeedle` line. Run `tools\\install.ps1` again if needed. The game log, `%APPDATA%\\Godot\\app_userdata\\FindTheNeedle\\logs\\godot.log`, must contain `[TalkyNeedle] v0.2.0 loaded`."
+            "fr": "Vérifiez que `override.cfg` se trouve à côté de `FindTheNeedle.exe` et contient la ligne `TalkyNeedle`. Lancez à nouveau `tools\\install.ps1` si besoin. Le journal du jeu, `%APPDATA%\\Godot\\app_userdata\\FindTheNeedle\\logs\\godot.log`, doit contenir `[TalkyNeedle] v0.2.1 loaded`.",
+            "en": "Check that `override.cfg` is next to `FindTheNeedle.exe` and contains the `TalkyNeedle` line. Run `tools\\install.ps1` again if needed. The game log, `%APPDATA%\\Godot\\app_userdata\\FindTheNeedle\\logs\\godot.log`, must contain `[TalkyNeedle] v0.2.1 loaded`."
           }
         },
         {
@@ -795,8 +795,8 @@
       "id": "p2-points-text",
       "type": "paragraph",
       "text": {
-        "fr": "Le webhook `points` choisit le workflow selon le titre de la récompense. Les mots dépendent de la langue de Windows au premier lancement du pont, français ici. Créez une récompense Twitch dont le titre contient un des mots ci-dessous : « Coup de vent sur le tas » lance `points_gust`. La casse ne compte pas, et le premier mot trouvé dans la liste de `bridge\\config.json` l'emporte.",
-        "en": "The `points` webhook picks the workflow from the title of the reward. The words depend on the Windows language when the bridge first starts, English here. Create a Twitch reward whose title contains one of the words below: \"Wind on the pile\" runs `points_gust`. Case does not matter, and the first word found in the list in `bridge\\config.json` wins."
+        "fr": "Le webhook `points` choisit le workflow selon le titre de la récompense, en français ou en anglais. Créez une récompense Twitch dont le titre contient un des mots ci-dessous : « Coup de vent sur le tas » lance `points_gust`. La casse ne compte pas, et le premier mot trouvé dans la liste de `bridge\\config.json` l'emporte.",
+        "en": "The `points` webhook picks the workflow from the title of the reward, in French or English. Create a Twitch reward whose title contains one of the words below: \"Wind on the pile\" runs `points_gust`. Case does not matter, and the first word found in the list in `bridge\\config.json` wins."
       }
     },
     {
